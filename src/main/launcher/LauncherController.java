@@ -104,9 +104,10 @@ public class LauncherController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		imagenNueva = new ImageView();
 		imageButton = new Button();
+		imageButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		imageButton.setBackground(Background.EMPTY);
 
 		imageButton.setOnAction(e -> onJugarAction(e));
@@ -148,14 +149,15 @@ public class LauncherController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void getJuegos() {
 
-		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, Ajedrez.class, SpaceInvaders.class,PongGame.class);
+		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, Ajedrez.class, SpaceInvaders.class,
+				PongGame.class);
 
 		model.previewsProperty().addAll(
 				new Image("assets/textures/snakeClassicPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
 				new Image("assets/textures/snakePreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
 				new Image("assets/textures/ajedrezPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
 				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
-				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true));
+				new Image("assets/textures/pongPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true));
 	}
 
 	private void getTooltip() {
