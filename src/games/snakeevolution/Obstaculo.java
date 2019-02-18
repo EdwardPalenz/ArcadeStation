@@ -7,7 +7,6 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Obstaculo implements EntityFactory {
@@ -17,8 +16,8 @@ public class Obstaculo implements EntityFactory {
 	
 	@Spawns("Obstaculo")
 	public Entity spawnFruta(SpawnData data) {
-		this.x = (int) data.getX();
-		this.y = (int) data.getY();
+		Obstaculo.x = (int) data.getX();
+		Obstaculo.y = (int) data.getY();
 		
 		obstaculo = Entities.builder().at(x, y).with(new CollidableComponent(true)).type(Entidades.OBSTACULO).viewFromNodeWithBBox((ImageView)(data.get("node")))
 				.build();

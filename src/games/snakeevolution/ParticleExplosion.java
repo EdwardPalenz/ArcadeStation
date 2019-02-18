@@ -11,7 +11,6 @@ import com.almasb.fxgl.particle.ParticleEmitter;
 import com.almasb.fxgl.particle.ParticleEmitters;
 
 import javafx.scene.effect.BlendMode;
-import javafx.scene.paint.Color;
 
 public class ParticleExplosion implements EntityFactory {
 

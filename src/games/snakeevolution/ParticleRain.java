@@ -1,6 +1,5 @@
 package games.snakeevolution;
 
-import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -11,8 +10,6 @@ import com.almasb.fxgl.particle.ParticleEmitter;
 import com.almasb.fxgl.particle.ParticleEmitters;
 
 import javafx.scene.effect.BlendMode;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 public class ParticleRain implements EntityFactory {
 
