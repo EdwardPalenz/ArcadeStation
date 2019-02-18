@@ -1,0 +1,13 @@
+@font-face {
+    font-family: Retroville;
+    src: url('Retroville_NC.ttf');
+}
+
+.label{
+	-fx-font-family: 'Retroville';
+}
+
+.button {
+	-fx-background-radius: 3em;
+	-fx-background-color: #8db34b
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="view" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <HBox alignment="CENTER" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="jugarButton" mnemonicParsing="false" onAction="#onJugarAction" text="Jugar" />
+            <Button fx:id="reglasButton" mnemonicParsing="false" onAction="#onReglasAction" text="Reglas" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <left>
+      <Button fx:id="anteriorButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="&lt;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="13.0" right="13.0" />
+         </padding></Button>
+   </left>
+   <right>
+      <Button fx:id="siguienteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="&gt;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="13.0" right="13.0" />
+         </padding></Button>
+   </right>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="header" maxWidth="1.7976931348623157E308" spacing="1.0">
+               <children>
+                  <MenuBar fx:id="menuBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="Opciones">
+                        <items>
+                              <CheckMenuItem fx:id="minimizarAlAbrirMenuItem" mnemonicParsing="false" text="Minimizar al abrir un juego" />
+                          <MenuItem fx:id="salirMenuItem" mnemonicParsing="false" onAction="#onSalirAction" text="Salir">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                 </accelerator>
+                              </MenuItem>
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Puntuaciones">
+                        <items>
+                          <MenuItem fx:id="puntuacionesMenuItem" mnemonicParsing="false" onAction="#onPuntuacionesAction" text="Delete" />
+                        </items>
+                      </Menu>
+                        <Menu mnemonicParsing="false" text="Personalización">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Elegir Presets" />
+                          </items>
+                        </Menu>
+                      <Menu mnemonicParsing="false" text="Acerca">
+                        <items>
+                          <MenuItem fx:id="acercaDeMenuItem" mnemonicParsing="false" onAction="#onAcercaDeAction" text="Acerca de..." />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                  <Button fx:id="minimizarButton" mnemonicParsing="false" onAction="#onMinimizarAction" prefHeight="15.0" prefWidth="15.0" text="-" />
+                  <Button fx:id="cerrarButton" mnemonicParsing="false" onAction="#onCerrarAction" prefHeight="15.0" prefWidth="15.0" text="x">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Arcade Station">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <StackPane fx:id="center" prefHeight="500.0" prefWidth="750.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
