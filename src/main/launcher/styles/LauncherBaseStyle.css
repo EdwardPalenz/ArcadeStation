@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
     font-family: Retroville;
     src: url('Retroville_NC.ttf');
 }
@@ -6,8 +6,37 @@
 .label{
 	-fx-font-family: 'Retroville';
 }
+*/
 
-.button {
-	-fx-background-radius: 3em;
-	-fx-background-color: #8db34b
+.root{
+	-fx-background-color:	#151515;
+}
+.barramenu{
+	-fx-background-color:#3f3f3f;
+}
+.context-menu{
+	-fx-background-color:#3f3f3f;
+	-fx-border-color:white;
+}
+.label{
+	-fx-text-fill:white;
+}
+.smallbutton{	
+	-fx-text-fill:white;
+	-fx-background-color: #bb000a;
+	-fx-background-insets: 0.0;
+	-fx-background-radius:0.0em;
+}
+.custombutton {
+	-fx-background-color:	#bb000a;
+	-fx-text-fill:white;
+	-fx-font-size:20.0px;
+}
+#center{
+	-fx-background-color:	#c8c8c8;
+}
+
+.roundbutton{
+	
+	-fx-background-radius: 3.0em;
 }
