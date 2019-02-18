@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.almasb.fxgl.app.GameApplication;
 
 import games.ajedrez.Ajedrez;
+import games.pong.PongGame;
 import games.snakeClassic.SnakeClassic;
 import games.snakeevolution.Snake;
 import games.spaceinvaders.spaceinvaders.SpaceInvaders;
@@ -147,12 +148,13 @@ public class LauncherController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void getJuegos() {
 
-		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, Ajedrez.class, SpaceInvaders.class);
+		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, Ajedrez.class, SpaceInvaders.class,PongGame.class);
 
 		model.previewsProperty().addAll(
 				new Image("assets/textures/snakeClassicPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
 				new Image("assets/textures/snakePreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
 				new Image("assets/textures/ajedrezPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
+				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
 				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true));
 	}
 
