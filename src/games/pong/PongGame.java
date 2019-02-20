@@ -176,7 +176,6 @@ public class PongGame extends GameApplication {
 		if (ball.getY() > (paddle.getBottomY() - (PADDLE_HEIGHT / 2)))
 			angleFrom = 15 * dir;
 
-
 		getAudioPlayer().playSound("ball_hit.wav");
 		Entities.animationBuilder().autoReverse(true).duration(Duration.seconds(0.5))
 				.interpolator(Interpolators.BOUNCE.EASE_OUT()).rotate(paddle).rotateFrom(angleFrom).rotateTo(0)
@@ -261,6 +260,7 @@ public class PongGame extends GameApplication {
 					paddle1.translateY(-getGameState().getDouble("Pvelocity"));
 					paddle1Up.translateY(-getGameState().getDouble("Pvelocity"));
 					paddle1Down.translateY(-getGameState().getDouble("Pvelocity"));
+					
 				}
 			}
 		}, KeyCode.W);
@@ -363,7 +363,7 @@ public class PongGame extends GameApplication {
 
 	private Entity spawnBat(double x, double y, Paint color) {
 		return Entities.builder().at(x, y).viewFromNodeWithBBox(new Rectangle(PADDLE_WIDTH, PADDLE_HEIGHT, color))
-				.buildAndAttach();
+				.with("dir",'u').buildAndAttach();
 	}
 
 	private Entity spawnBall(double x, double y) {

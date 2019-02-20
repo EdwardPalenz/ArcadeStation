@@ -15,6 +15,8 @@ public class PaddleComponent extends Component {
 
 	private Vec2 velocity = new Vec2();
 
+	private char dir;
+
 	@Override
 	public void onUpdate(double tpf) {
 		speed = 600 * (float) tpf;

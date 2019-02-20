@@ -8,6 +8,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -36,16 +39,30 @@
       </HBox>
    </bottom>
    <left>
-      <Button fx:id="anteriorButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="custombutton" text="&lt;" BorderPane.alignment="CENTER">
+      <Button fx:id="anteriorButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="custombutton" BorderPane.alignment="CENTER">
          <padding>
             <Insets left="13.0" right="13.0" />
-         </padding></Button>
+         </padding>
+         <graphic>
+            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/textures/launcherLeft.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </left>
    <right>
-      <Button fx:id="siguienteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="custombutton" text="&gt;" BorderPane.alignment="CENTER">
+      <Button fx:id="siguienteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="custombutton" BorderPane.alignment="CENTER">
          <padding>
             <Insets left="13.0" right="13.0" />
-         </padding></Button>
+         </padding>
+         <graphic>
+            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/textures/launcherRight.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </right>
    <top>
       <VBox BorderPane.alignment="CENTER">
@@ -69,10 +86,13 @@
                           <MenuItem fx:id="puntuacionesMenuItem" mnemonicParsing="false" onAction="#onPuntuacionesAction" text="Delete" />
                         </items>
                       </Menu>
-                        <Menu mnemonicParsing="false" styleClass="barramenu" text="Personalización">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Elegir Presets" />
-                          </items>
+                        <Menu mnemonicParsing="false" styleClass="barramenu" text="Temas">
+                           <items>
+                              <RadioMenuItem fx:id="defaultTheme" mnemonicParsing="false" text="Shadow (Predeterminado)" />
+                              <RadioMenuItem fx:id="aquaTheme" mnemonicParsing="false" text="Aqua" />
+                              <RadioMenuItem fx:id="autumTheme" mnemonicParsing="false" text="Autum" />
+                              <RadioMenuItem fx:id="bywTheme" mnemonicParsing="false" text="BlackAndWhite" />
+                           </items>
                         </Menu>
                       <Menu mnemonicParsing="false" styleClass="barramenu" text="Acerca">
                         <items>

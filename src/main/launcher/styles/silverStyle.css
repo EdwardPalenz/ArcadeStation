@@ -1,12 +1,12 @@
 .root{
-	-fx-background-color: #191970;
+	-fx-background-color:	#151515;
 }
 
 .barramenu{
-	-fx-background-color:#2828ae;
+	-fx-background-color:#3f3f3f;
 }
 .context-menu{
-	-fx-background-color:#2828ae;
+	-fx-background-color:#3f3f3f;
 	-fx-border-color:white;
 }
 .label{
@@ -15,16 +15,15 @@
 
 .smallbutton{	
 	-fx-text-fill:black;
-	-fx-background-color: #2bbaba;
+	-fx-background-color: #f1f1f1;
 }
 .custombutton {
-	-fx-background-color:	#2bbaba;
 	-fx-text-fill:black;
+	-fx-background-color:#f1f1f1;
 }
 .smallbutton:hover , .custombutton:hover{
 	-fx-background-color:#f5f5f5;
 }
 .smallbutton:armed , .custombutton:armed{
-	
-	-fx-background-color:#430002;
+	-fx-background-color:#5b5b5b;
 }

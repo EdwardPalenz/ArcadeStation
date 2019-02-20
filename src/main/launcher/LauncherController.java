@@ -15,8 +15,7 @@ import games.snakeevolution.Snake;
 import games.spaceinvaders.spaceinvaders.SpaceInvaders;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.application.Application;
-import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,15 +28,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class LauncherController implements Initializable {
@@ -45,6 +44,8 @@ public class LauncherController implements Initializable {
 	private static final int CENTER_HEIGHT = 450;
 
 	private static final int CENTER_WIDTH = 500;
+
+	private static final String TEMAS_DIR = "main/launcher/styles/";
 
 	@FXML
 	private BorderPane view;
@@ -80,7 +81,20 @@ public class LauncherController implements Initializable {
 	private MenuItem puntuacionesMenuItem;
 
 	@FXML
+	private RadioMenuItem defaultTheme;
+
+	@FXML
+	private RadioMenuItem bywTheme;
+
+	@FXML
+	private RadioMenuItem autumTheme;
+
+	@FXML
+	private RadioMenuItem aquaTheme;
+
+	@FXML
 	private MenuItem acercaDeMenuItem;
+
 	@FXML
 	private Button minimizarButton;
 
@@ -107,7 +121,9 @@ public class LauncherController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		/*
+		 * Imagen con el preview del juego seleccionado
+		 */
 		imagenNueva = new ImageView();
 
 		imagenNueva = generateIV();
@@ -127,6 +143,9 @@ public class LauncherController implements Initializable {
 		/* Menús */
 		minimizarAlAbrirMenuItem.selectedProperty().bindBidirectional(model.minimizarProperty());
 
+		/*
+		 * Permite mover la ventana arrastrando la barra del menú superior
+		 */
 		menuBar.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -143,9 +162,47 @@ public class LauncherController implements Initializable {
 			}
 		});
 
+		/*
+		 * Temas
+		 */
+		ToggleGroup temasGroup = new ToggleGroup();
+
+		defaultTheme.setUserData("default");
+		defaultTheme.setToggleGroup(temasGroup);
+		defaultTheme.setSelected(true);
+
+		bywTheme.setUserData("silverStyle.css");
+		bywTheme.setToggleGroup(temasGroup);
+
+		aquaTheme.setUserData("aquaStyle.css");
+		aquaTheme.setToggleGroup(temasGroup);
+
+		autumTheme.setUserData("autumStyle.css");
+		autumTheme.setToggleGroup(temasGroup);
+
+		// Listener del ToggleGroup
+		temasGroup.selectedToggleProperty().addListener((o, ov, nv) -> cambiarTema(nv));
+
+	}
+
+	private void cambiarTema(Toggle nv) {
+		// Lista de estilos de la escena
+		ObservableList<String> stylesheets = view.getScene().getStylesheets();
+
+		// Si hay más de uno, borra el último. (Dejando siempre el default)
+		if (stylesheets.size() > 1)
+			stylesheets.remove(stylesheets.size() - 1);
+
+		// Si el seleccionado es el default no añadira un tema nuevo
+		String tema = nv.getUserData().toString();
+		if (!"default".equals(tema)) {
+			stylesheets.add(TEMAS_DIR + tema);
+		}
 	}
 
 	private void esperarDoubleClick(MouseEvent e) {
+		// Espera a que ocurra un segundo click antes de 300 milissegundos para abrir el
+		// juego
 		if (!imageClicked) {
 			imageClicked = true;
 
@@ -195,7 +252,7 @@ public class LauncherController implements Initializable {
 		if (model.getJuegoSeleccionado() <= 0) {
 			model.setJuegoSeleccionado(model.getJuegos().size() - 1);
 		} else {
-			model.setJuegoSeleccionado(model.getJuegoSeleccionado() + 1);
+			model.setJuegoSeleccionado(model.getJuegoSeleccionado() - 1);
 		}
 
 		imagenNueva = generateIV();
