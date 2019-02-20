@@ -1,0 +1,27 @@
+.root{
+	-fx-background-color: #151515;
+}
+
+.barramenu{
+	-fx-background-color:#3f3f3f;
+}
+.context-menu{
+	-fx-background-color:#3f3f3f;
+	-fx-border-color:white;
+}
+.label{
+	-fx-text-fill:white;
+}
+
+.smallbutton{	
+	-fx-text-fill:white;
+	-fx-background-color: #bb000a;
+}
+.custombutton {
+	-fx-background-color:	#bb000a;
+	-fx-text-fill:white;
+}
+.smallbutton:armed , .custombutton:armed{
+	
+	-fx-background-color:#430002;
+}

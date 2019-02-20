@@ -8,12 +8,14 @@ import java.util.ResourceBundle;
 import com.almasb.fxgl.app.GameApplication;
 
 import games.ajedrez.Ajedrez;
+import games.furiout.FurioutApp;
 import games.pong.PongGame;
 import games.snakeClassic.SnakeClassic;
 import games.snakeevolution.Snake;
 import games.spaceinvaders.spaceinvaders.SpaceInvaders;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -35,6 +37,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class LauncherController implements Initializable {
@@ -89,9 +92,9 @@ public class LauncherController implements Initializable {
 
 	private ImageView imagenNueva;
 
-	private Button imageButton;
+	private double x, y;
 
-	double x, y;
+	private boolean imageClicked = false;
 
 	public LauncherController() throws IOException {
 		getJuegos();
@@ -106,21 +109,17 @@ public class LauncherController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		imagenNueva = new ImageView();
-		imageButton = new Button();
-		imageButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		imageButton.setBackground(Background.EMPTY);
-
-		imageButton.setOnAction(e -> onJugarAction(e));
 
 		imagenNueva = generateIV();
-		imageButton.setGraphic(imagenNueva);
-		center.getChildren().add(imageButton);
 
-		siguienteButton.disableProperty()
-				.bind(Bindings.equal(model.juegosProperty().size() - 1, model.juegoSeleccionadoProperty()));
+		imagenNueva.setOnMousePressed(e -> esperarDoubleClick(e));
 
-		anteriorButton.disableProperty().bind(Bindings.equal(0, model.juegoSeleccionadoProperty()));
+		center.getChildren().add(imagenNueva);
 
+		/*
+		 * Botones de siguiente y anterior
+		 * 
+		 */
 		siguienteButton.setOnAction(e -> siguienteImagen());
 
 		anteriorButton.setOnAction(e -> anteriorImagen());
@@ -146,32 +145,44 @@ public class LauncherController implements Initializable {
 
 	}
 
+	private void esperarDoubleClick(MouseEvent e) {
+		if (!imageClicked) {
+			imageClicked = true;
+
+			Task<Void> esperarClick = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
+					Thread.sleep(300);
+					imageClicked = false;
+					return null;
+				}
+			};
+			esperarClick.setOnSucceeded(e1 -> {
+				imageClicked = false;
+			});
+			new Thread(esperarClick).start();
+		} else {
+			onJugarAction(null);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private void getJuegos() {
 
-		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, Ajedrez.class, SpaceInvaders.class,
-				PongGame.class);
+		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, FurioutApp.class, Ajedrez.class,
+				SpaceInvaders.class, PongGame.class);
 
 		model.previewsProperty().addAll(
-				new Image("assets/textures/snakeClassicPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
-				new Image("assets/textures/snakePreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
-				new Image("assets/textures/ajedrezPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
-				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true),
-				new Image("assets/textures/pongPreview.png", CENTER_WIDTH, CENTER_HEIGHT, false, true));
-	}
-
-	private void getTooltip() {
-		Tooltip t = new Tooltip(model.getJuegos().get(model.getJuegoSeleccionado()).getSimpleName());
-		t.centerOnScreen();
-		t.setShowDelay(Duration.millis(200));
-		imageButton.setTooltip(t);
+				new Image("assets/textures/snakeClassicPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("assets/textures/snakePreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("assets/previews/furioutPreview.jpg", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("assets/textures/ajedrezPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("assets/textures/pongPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true));
 	}
 
 	private ImageView generateIV() {
 		ImageView imagen = new ImageView(model.getPreviews().get(model.getJuegoSeleccionado()));
-
-		getTooltip();
-
 		return imagen;
 	}
 
@@ -181,7 +192,11 @@ public class LauncherController implements Initializable {
 
 		ImageView imagenVieja = imagenNueva;
 
-		model.setJuegoSeleccionado(model.getJuegoSeleccionado() - 1);
+		if (model.getJuegoSeleccionado() <= 0) {
+			model.setJuegoSeleccionado(model.getJuegos().size() - 1);
+		} else {
+			model.setJuegoSeleccionado(model.getJuegoSeleccionado() + 1);
+		}
 
 		imagenNueva = generateIV();
 		center.getChildren().add(imagenNueva);
@@ -204,8 +219,7 @@ public class LauncherController implements Initializable {
 
 		ParallelTransition pT = new ParallelTransition(center, hoja1, hoja2);
 		pT.setOnFinished(e -> {
-			imageButton.setGraphic(imagenNueva);
-			imageButton.setLayoutX(0);
+			imagenNueva.setLayoutX(0);
 		});
 		pT.play();
 
@@ -216,7 +230,11 @@ public class LauncherController implements Initializable {
 		siguienteButton.toFront();
 		ImageView imagenVieja = imagenNueva;
 
-		model.setJuegoSeleccionado(model.getJuegoSeleccionado() + 1);
+		if (model.getJuegoSeleccionado() >= model.getJuegos().size() - 1) {
+			model.setJuegoSeleccionado(0);
+		} else {
+			model.setJuegoSeleccionado(model.getJuegoSeleccionado() + 1);
+		}
 
 		imagenNueva = generateIV();
 		center.getChildren().add(imagenNueva);
@@ -240,8 +258,7 @@ public class LauncherController implements Initializable {
 
 		ParallelTransition pT = new ParallelTransition(center, hoja1, hoja2);
 		pT.setOnFinished(e -> {
-			imageButton.setGraphic(imagenNueva);
-			imageButton.setLayoutX(0);
+			imagenNueva.setLayoutX(0);
 		});
 		pT.play();
 
