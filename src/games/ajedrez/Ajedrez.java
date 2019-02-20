@@ -1,6 +1,7 @@
 package games.ajedrez;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.Entities;
@@ -16,11 +17,16 @@ import games.ajedrez.fichas.Peon;
 import games.ajedrez.fichas.Reina;
 import games.ajedrez.fichas.Rey;
 import games.ajedrez.fichas.Torre;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public class Ajedrez extends GameApplication {
 
@@ -39,6 +45,8 @@ public class Ajedrez extends GameApplication {
 
 //	private static String colorTurno = "blancas";
 	public static boolean reyEnPeligro = false;
+
+	private Text turnoText;
 
 	@Override
 	protected void initSettings(GameSettings settings) {
@@ -103,13 +111,33 @@ public class Ajedrez extends GameApplication {
 
 		ArrayList<Entity> entities = getGameWorld().getEntities();
 		for (int i = 1; i < entities.size(); i++) {
-			if (entities.get(i).getString("color").equals("negra")) {
+			if (entities.get(i).getProperties().exists("color") && entities.get(i).getString("color").equals("negra")) {
 				entities.get(i).getComponent(SelectableComponent.class).setValue(false);
 			} else {
 				entities.get(i).getComponent(SelectableComponent.class).setValue(true);
 			}
 		}
 
+	}
+
+	@Override
+	protected void initGameVars(Map<String, Object> vars) {
+		vars.put("colorturno", "");
+	}
+
+	@Override
+	protected void initUI() {
+		turnoText = new Text((TILE_SIZE+6), (TILE_SIZE * 4)-6, "");
+		turnoText.setFill(Color.rgb(255, 215, 0));
+		turnoText.setFont(new Font(TILE_SIZE - 24));
+		turnoText.setTextAlignment(TextAlignment.CENTER);
+		turnoText.toFront();
+
+		turnoText.textProperty()
+				.bind(Bindings.concat("Turno de las ").concat(getGameState().stringProperty("colorturno").concat("s")));
+
+		getGameScene().addUINode(turnoText);
+		cambioTurno("negra");
 	}
 
 	public static void generarTemporal(Point2D position, Color rgb, boolean enemy) {
@@ -170,6 +198,21 @@ public class Ajedrez extends GameApplication {
 				entities.get(i).getComponent(SelectableComponent.class).setValue(true);
 			}
 		}
+
+		if (color.equals("blanca")) {
+			getGameState().setValue("colorturno", "negra");
+		} else {
+			getGameState().setValue("colorturno", "blanca");
+		}
+		turnoText.setVisible(true);
+		getMasterTimer().runOnceAfter(new Runnable() {
+
+			@Override
+			public void run() {
+				turnoText.setVisible(false);
+			}
+		}, Duration.seconds(2));
+
 		fichaSeleccionada = null;
 	}
 

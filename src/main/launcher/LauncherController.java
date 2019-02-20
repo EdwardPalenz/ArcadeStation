@@ -128,8 +128,6 @@ public class LauncherController implements Initializable {
 
 		imagenNueva = generateIV();
 
-		imagenNueva.setOnMousePressed(e -> esperarDoubleClick(e));
-
 		center.getChildren().add(imagenNueva);
 
 		/*
@@ -240,6 +238,7 @@ public class LauncherController implements Initializable {
 
 	private ImageView generateIV() {
 		ImageView imagen = new ImageView(model.getPreviews().get(model.getJuegoSeleccionado()));
+		imagen.setOnMousePressed(e -> esperarDoubleClick(e));
 		return imagen;
 	}
 

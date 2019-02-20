@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,6 +36,7 @@ public class PreloaderLauncher extends Preloader {
 		primaryStage.setHeight(300);
 		primaryStage.setScene(scene);
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
+		primaryStage.getIcons().add(new Image("assets/textures/launcherIcon.png"));
 		primaryStage.show();
 	}
 
