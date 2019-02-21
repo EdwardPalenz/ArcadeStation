@@ -38,7 +38,6 @@ public class Peon {
 //		El movimiento estándar del peón es una casilla hacia delante, si no hay una ficha en esa casilla
 		List<Entity> entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX(), peon.getY() + movimiento));
 		if (entitiesAt.size() < 1) {
-
 				Point2D position = new Point2D(peon.getX(), peon.getY() + movimiento);
 				Ajedrez.generarTemporal(position, Ajedrez.temporalVacio, false);
 			

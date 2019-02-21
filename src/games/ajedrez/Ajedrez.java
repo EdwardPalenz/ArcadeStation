@@ -10,6 +10,7 @@ import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.entity.components.SelectableComponent;
 import com.almasb.fxgl.parser.tiled.TiledMap;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.ui.Position;
 
 import games.ajedrez.fichas.Alfil;
 import games.ajedrez.fichas.Caballo;
@@ -17,16 +18,11 @@ import games.ajedrez.fichas.Peon;
 import games.ajedrez.fichas.Reina;
 import games.ajedrez.fichas.Rey;
 import games.ajedrez.fichas.Torre;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
 public class Ajedrez extends GameApplication {
 
@@ -46,13 +42,12 @@ public class Ajedrez extends GameApplication {
 //	private static String colorTurno = "blancas";
 	public static boolean reyEnPeligro = false;
 
-	private Text turnoText;
 
 	@Override
 	protected void initSettings(GameSettings settings) {
 		settings.setHeight(8 * TILE_SIZE);
 		settings.setWidth(8 * TILE_SIZE);
-		settings.setTitle("Test");
+		settings.setTitle("Ajedrez");
 		settings.setVersion("0.1");
 
 		settings.setMenuEnabled(false);
@@ -117,7 +112,6 @@ public class Ajedrez extends GameApplication {
 				entities.get(i).getComponent(SelectableComponent.class).setValue(true);
 			}
 		}
-
 	}
 
 	@Override
@@ -127,16 +121,8 @@ public class Ajedrez extends GameApplication {
 
 	@Override
 	protected void initUI() {
-		turnoText = new Text((TILE_SIZE+6), (TILE_SIZE * 4)-6, "");
-		turnoText.setFill(Color.rgb(255, 215, 0));
-		turnoText.setFont(new Font(TILE_SIZE - 24));
-		turnoText.setTextAlignment(TextAlignment.CENTER);
-		turnoText.toFront();
-
-		turnoText.textProperty()
-				.bind(Bindings.concat("Turno de las ").concat(getGameState().stringProperty("colorturno").concat("s")));
-
-		getGameScene().addUINode(turnoText);
+		getNotificationService().setBackgroundColor(Color.YELLOW);
+		getNotificationService().setPosition(Position.RIGHT);
 		cambioTurno("negra");
 	}
 
@@ -166,11 +152,9 @@ public class Ajedrez extends GameApplication {
 			}
 
 			if (fichaSeleccionada.getString("color").equals("blanca")) {
-
 				Ajedrez.negrasEliminadas.add(enemiga);
 
 			} else {
-
 				Ajedrez.negrasEliminadas.add(enemiga);
 
 			}
@@ -200,20 +184,16 @@ public class Ajedrez extends GameApplication {
 		}
 
 		if (color.equals("blanca")) {
-			getGameState().setValue("colorturno", "negra");
+			getGameState().setValue("colorturno", "negras");
+			getNotificationService().setTextColor(Color.BLACK);
+
 		} else {
-			getGameState().setValue("colorturno", "blanca");
+			getGameState().setValue("colorturno", "blancas");
+			getNotificationService().setTextColor(Color.WHITE);
 		}
-		turnoText.setVisible(true);
-		getMasterTimer().runOnceAfter(new Runnable() {
 
-			@Override
-			public void run() {
-				turnoText.setVisible(false);
-			}
-		}, Duration.seconds(2));
+		getNotificationService().pushNotification("Turno de las " + getGameState().getString("colorturno"));
 
-		fichaSeleccionada = null;
 	}
 
 	@Override

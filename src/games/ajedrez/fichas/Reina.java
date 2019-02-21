@@ -5,12 +5,12 @@ import com.almasb.fxgl.entity.GameWorld;
 
 public class Reina {
 
-	public static void seleccionarReina(Entity newValue, GameWorld gameWorld, int height, int width) {
+	public static void seleccionarReina(Entity reina, GameWorld gameWorld, int height, int width) {
 
 //		Nada que epxlicar aqui
 
-		Alfil.seleccionarAlfil(newValue, gameWorld, height, width);
-		Torre.seleccionarTorre(newValue, gameWorld, height, width);
+		Alfil.seleccionarAlfil(reina, gameWorld, height, width);
+		Torre.seleccionarTorre(reina, gameWorld, height, width);
 	}
 
 }
