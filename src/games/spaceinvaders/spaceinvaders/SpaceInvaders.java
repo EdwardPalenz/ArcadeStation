@@ -1,5 +1,7 @@
 package games.spaceinvaders.spaceinvaders;
 
+import java.io.IOException;
+
 import com.almasb.fxgl.app.DSLKt;
 import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.app.GameApplication;
@@ -177,7 +179,7 @@ public class SpaceInvaders extends GameApplication {
 				enemyBullet.removeFromWorld();
 				wallControll = wall.getComponent(WallControll.class);
 				wallControll.wallHit();
-
+				gameUi.removePoints();
 				DSLKt.play("wallImpact.wav");
 
 			}
@@ -222,18 +224,9 @@ public class SpaceInvaders extends GameApplication {
 		getDisplay().showConfirmationBox("Has perdido \n ¿Intentarlo otra vez?", yes -> {
 			if (yes) {
 				getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
-				FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
-					Task<Void> guardarTask = new Task<Void>() {
+				startNewGame();
+				
 
-						@Override
-						protected Void call() throws Exception {
-							gameUi.savePoints(nombre);
-							return null;
-						}
-					};
-					new Thread(guardarTask).start();
-					startNewGame();
-				});
 
 			} else {
 				FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
@@ -258,14 +251,17 @@ public class SpaceInvaders extends GameApplication {
 		getDisplay().showConfirmationBox("Victoria\n ¿Volver a jugar?", yes -> {
 			if (yes) {
 				getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
-				FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
-					gameUi.savePoints(nombre);
 					startNewGame();
-				});
+				
 
 			} else {
 				FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
-					gameUi.savePoints(nombre);
+					try {
+						gameUi.savePoints(nombre);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					exit();
 				});
 

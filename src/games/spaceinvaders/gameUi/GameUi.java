@@ -4,6 +4,8 @@ package games.spaceinvaders.gameUi;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import com.almasb.fxgl.ui.UIController;
 
 import games.spaceinvaders.scoreModel.ScoreModel;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -65,27 +68,45 @@ public class GameUi implements UIController {
 	public void addPoints() {
 		scoreModel.setScore(scoreModel.getScore() + 50);
 	}
+	
+	public void removePoints() {
+		scoreModel.setScore(scoreModel.getScore() - 10);
+	}
 
 	public void removeLife() {
 		Texture vidaFuera = lives.get(lives.size() - 1);
 
 		lives.remove(vidaFuera);
+		
+		scoreModel.setScore(scoreModel.getScore()-300);
 
 		gameScene.removeUINode(vidaFuera);
 
 	}
 
-	public void savePoints(String string) {
-		File file = new File(LauncherApp.APP_SCORE_DIR + "Space Invaders" + File.separator + "puntuaciones.txt");
-		try {
-			PrintWriter writter = new PrintWriter(file);
-			writter.write(string + ": " + scoreModel.getScore() + "\n");
-			writter.flush();
-			writter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void savePoints(String string) throws IOException {
+		Task<Void> taskGuardar=new Task<Void>() {
+
+			@Override
+			protected Void call() throws Exception {
+				File file = new File(LauncherApp.APP_SCORE_DIR  + File.separator + "Space Invaders");
+				
+				if(!file.exists())
+					file.mkdir();
+				
+				file=new File(LauncherApp.APP_SCORE_DIR  + File.separator + "Space Invaders"+File.separator+"puntuaciones.txt");
+				if(!file.exists())
+					file.createNewFile();
+				
+				Files.write(file.toPath(),(string+": "+scoreModel.getScore()+"\n").getBytes(), StandardOpenOption.APPEND);
+				return null;
+			}
+			
+		};
+		new Thread(taskGuardar).start();
+		
+		
+	
 	}
 
 	public List<Texture> getLives() {
