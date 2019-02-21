@@ -14,7 +14,7 @@ import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
 
-import games.snakeevolution.Direccion;
+import games.snakeClassic.Direccion;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
@@ -54,7 +54,6 @@ public class SnakeClassic extends GameApplication {
 		settings.setVersion("1.0");
 		settings.setFullScreenAllowed(true);
 		settings.setAppIcon("snakeClassic.png");
-//		settings.setProfilingEnabled(true);
 	}
 
 	@Override
@@ -86,7 +85,6 @@ public class SnakeClassic extends GameApplication {
 			@Override
 			public void run() {
 				Mover();
-
 			}
 		}, Duration.seconds(3));
 
@@ -135,19 +133,10 @@ public class SnakeClassic extends GameApplication {
 	}
 
 	private void addCola() {
-//		if (rgb > 200) {
-//			gradientPositive = false;
-//		} else if (rgb < 6) {
-//			gradientPositive = true;
-//		}
-//		if (gradientPositive) {
-//			rgb += 6;
-//		} else {
-//			rgb -= 6;
-//		}
 		Entity ultima = serpiente.get(serpiente.size() - 1);
 		Direccion dir = (Direccion) ultima.getObject("direccion");
 		Point2D newPosition = ultima.getPosition().subtract(new Point2D(dir.getX(), dir.getY()));
+
 		generarSnake((int) newPosition.getX(), (int) newPosition.getY(), ultima.getObject("direccion"));
 	}
 
@@ -184,7 +173,7 @@ public class SnakeClassic extends GameApplication {
 
 					} else {
 						getDisplay().showInputBox(
-								"Indroduce tu nombre para guardar tu puntuación más alta (" + highScore + ")", name -> {
+								"Indroduce tu nombre para guardar tu puntuaciï¿½n mï¿½s alta (" + highScore + ")", name -> {
 									if (name != null) {
 										GuardarPuntuacion(name);
 
@@ -384,17 +373,12 @@ public class SnakeClassic extends GameApplication {
 	}
 
 	private void generarSnake(int x, int y, Direccion dir) {
+
+		System.out.println(x + " " + y);
 		Entity snakePart = Entities.builder().at(new Point2D(x, y)).with("direccion", dir)
-//				.viewFromNodeWithBBox(new Rectangle(SNAKE_SIZE, SNAKE_SIZE, Color.WHITE))
-//				.viewFromNodeWithBBox(new ImageView(new Image(url.toString(),SNAKE_SIZE,SNAKE_SIZE,false,true)))
 				.viewFromNodeWithBBox(new ImageView(
-						new Image("/games/snakeClassic/snakeClassic.png", SNAKE_SIZE, SNAKE_SIZE, true, true)))
+						new Image("/games/snakeClassic/snakeClassic.png", SNAKE_SIZE, SNAKE_SIZE, false, false)))
 				.buildAndAttach();
 		serpiente.add(snakePart);
-	}
-
-	@Override
-	public String toString() {
-		return "SnakeClassic";
 	}
 }

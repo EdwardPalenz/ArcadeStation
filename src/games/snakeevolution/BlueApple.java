@@ -17,8 +17,8 @@ public class BlueApple implements EntityFactory {
 	
 	@Spawns("BlueApple")
 	public Entity spawnFruta(SpawnData data) {
-		int x = (int) FXGLMath.random(0, Snake.SCREEN_SIZE-30);
-		int y = (int) FXGLMath.random(0, Snake.SCREEN_SIZE-30);
+		int x = (int) FXGLMath.random(0, SnakeEvolution.SCREEN_SIZE-30);
+		int y = (int) FXGLMath.random(0, SnakeEvolution.SCREEN_SIZE-30);
 		blueApple = Entities.builder().at(x, y).with(new CollidableComponent(true)).type(Entidades.APPLE).viewFromNodeWithBBox(new ImageView(new Image("/assets/textures/blue_apple.png",30.0,30.0,true,true)))
 				.build();
 		return blueApple;

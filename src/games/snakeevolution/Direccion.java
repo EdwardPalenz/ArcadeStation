@@ -1,7 +1,7 @@
 package games.snakeevolution;
 
 public enum Direccion {
-	DERECHA(Snake.SNAKE_SIZE,0), IZQUIERDA(-Snake.SNAKE_SIZE,0), ARRIBA(0,-Snake.SNAKE_SIZE), ABAJO(0,Snake.SNAKE_SIZE);
+	DERECHA(SnakeEvolution.SNAKE_SIZE,0), IZQUIERDA(-SnakeEvolution.SNAKE_SIZE,0), ARRIBA(0,-SnakeEvolution.SNAKE_SIZE), ABAJO(0,SnakeEvolution.SNAKE_SIZE);
 	
 	private int x;
 	private int y;

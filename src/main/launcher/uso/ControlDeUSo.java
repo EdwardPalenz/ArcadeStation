@@ -1,10 +1,7 @@
 package main.launcher.uso;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,25 +29,9 @@ public class ControlDeUSo {
 
 	private void leerFicheroUsos() throws IOException {
 
-		Task<List<String>> leer = new Task<List<String>>() {
+		usos = Files.readAllLines(ficheroUso.toPath());
 
-			@Override
-			protected List<String> call() throws Exception {
-				System.out.println("Leyendo usos");
-				return Files.readAllLines(ficheroUso.toPath());
-			}
-		};
-
-		leer.setOnSucceeded(e -> {
-			System.out.println("usos leyendos");
-			usos = (List<String>) e.getSource().getValue();
-			generarHashMap();
-		});
-
-		leer.setOnFailed(e -> {
-			System.err.println("nope");
-		});
-		new Thread(leer).start();
+		generarHashMap();
 
 	}
 
@@ -73,6 +54,5 @@ public class ControlDeUSo {
 	public File getFicheroUso() {
 		return ficheroUso;
 	}
-
 
 }

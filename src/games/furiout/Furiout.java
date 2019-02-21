@@ -37,7 +37,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.launcher.LauncherApp;
 
-public class FurioutApp extends GameApplication {
+public class Furiout extends GameApplication {
 
 	public final int SCREEN_HEIGHT = 800;
 	public final int SCREEN_WIDTH = 600;

@@ -3,15 +3,16 @@ package main.launcher;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.almasb.fxgl.app.GameApplication;
 
 import games.ajedrez.Ajedrez;
-import games.furiout.FurioutApp;
+import games.furiout.Furiout;
 import games.pong.PongGame;
 import games.snakeClassic.SnakeClassic;
-import games.snakeevolution.Snake;
+import games.snakeevolution.SnakeEvolution;
 import games.spaceinvaders.spaceinvaders.SpaceInvaders;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -224,7 +225,7 @@ public class LauncherController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void getJuegos() {
 
-		model.juegosProperty().addAll(SnakeClassic.class, Snake.class, FurioutApp.class, Ajedrez.class,
+		model.juegosProperty().addAll(SnakeClassic.class, SnakeEvolution.class, Furiout.class, Ajedrez.class,
 				SpaceInvaders.class, PongGame.class);
 
 		model.previewsProperty().addAll(
@@ -356,6 +357,8 @@ public class LauncherController implements Initializable {
 		});
 
 		abrirApp.setOnSucceeded(e -> {
+			HashMap<String, Integer> usoApps = LauncherApp.getUsoControl().getUsoApps();
+			usoApps.replace(game.getSimpleName(), usoApps.get(game.getSimpleName()) + 1);
 			cargando.close();
 		});
 

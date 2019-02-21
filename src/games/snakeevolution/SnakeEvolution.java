@@ -36,7 +36,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.launcher.LauncherApp;
 
-public class Snake extends GameApplication {
+public class SnakeEvolution extends GameApplication {
 
 	private static final int SPEED = 100;
 	public static final int SNAKE_SIZE = 25;

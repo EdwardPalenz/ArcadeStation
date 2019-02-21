@@ -2,7 +2,6 @@ package main.launcher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class LauncherApp extends Application {
 
 	private LauncherController controller;
 
-	private ControlDeUSo usoControl;
+	private static ControlDeUSo usoControl;
 
 	@Override
 	public void init() throws Exception {
@@ -57,8 +56,9 @@ public class LauncherApp extends Application {
 
 		PrintWriter writer = new PrintWriter(getUsoControl().getFicheroUso());
 		for (int i = 0; i < juegos.size(); i++) {
-			String nombreJuego = juegos.get(i).toString();
-			writer.write(nombreJuego + ":" + getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0));
+
+			String nombreJuego = juegos.get(i).getSimpleName();
+			writer.write(nombreJuego + ":" + getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0) + "\n");
 
 		}
 		writer.close();
@@ -91,12 +91,12 @@ public class LauncherApp extends Application {
 		LauncherApp.primaryStage = primaryStage;
 	}
 
-	public ControlDeUSo getUsoControl() {
+	public static ControlDeUSo getUsoControl() {
 		return usoControl;
 	}
 
-	public void setUsoControl(ControlDeUSo usoControl) {
-		this.usoControl = usoControl;
+	public static void setUsoControl(ControlDeUSo usoControl) {
+		LauncherApp.usoControl = usoControl;
 	}
 
 }
