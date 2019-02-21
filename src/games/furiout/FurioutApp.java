@@ -35,6 +35,7 @@ import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import main.launcher.LauncherApp;
 
 public class FurioutApp extends GameApplication {
 
@@ -262,7 +263,7 @@ public class FurioutApp extends GameApplication {
 	}
 	
 	private void save(String nombre) {
-		File file = new File(/*LauncherApp.APP_SCORE_DIR + "FuriOut" + File.separator + */"puntuaciones.txt");
+		File file = new File(LauncherApp.APP_SCORE_DIR + "FuriOut" + File.separator + "puntuaciones.txt");
 		try {
 			PrintWriter writter = new PrintWriter(file);
 			writter.write(nombre + ": " + puntuacion + "\n");
