@@ -261,7 +261,7 @@ public class FurioutApp extends GameApplication {
 		});
 		transition.play();
 	}
-	
+
 	private void save(String nombre) {
 		File file = new File(LauncherApp.APP_SCORE_DIR + "FuriOut" + File.separator + "puntuaciones.txt");
 		try {
@@ -277,5 +277,10 @@ public class FurioutApp extends GameApplication {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	@Override
+	public String toString() {
+		return "Furiout";
 	}
 }

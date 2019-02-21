@@ -580,4 +580,9 @@ public class Snake extends GameApplication {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	@Override
+	public String toString() {
+		return "SnakeEvolution";
+	}
 }

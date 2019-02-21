@@ -395,6 +395,6 @@ public class SnakeClassic extends GameApplication {
 
 	@Override
 	public String toString() {
-		return "SNAKE CLASSIC 1.0";
+		return "SnakeClassic";
 	}
 }

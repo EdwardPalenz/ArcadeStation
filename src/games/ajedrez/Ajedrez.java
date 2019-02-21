@@ -198,6 +198,6 @@ public class Ajedrez extends GameApplication {
 
 	@Override
 	public String toString() {
-		return "AJEDREZ";
+		return "Ajedrez";
 	}
 }

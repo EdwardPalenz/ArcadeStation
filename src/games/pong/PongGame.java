@@ -414,6 +414,6 @@ public class PongGame extends GameApplication {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "PONG ADVANCE";
+		return "Pong";
 	}
 }

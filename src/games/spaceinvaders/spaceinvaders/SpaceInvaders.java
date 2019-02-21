@@ -274,4 +274,8 @@ public class SpaceInvaders extends GameApplication {
 
 	}
 
+	@Override
+	public String toString() {
+		return "SpaceInvaders";
+	}
 }

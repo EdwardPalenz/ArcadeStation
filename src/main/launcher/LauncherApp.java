@@ -1,12 +1,19 @@
 package main.launcher;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import com.almasb.fxgl.app.GameApplication;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import main.launcher.uso.ControlDeUSo;
 
 public class LauncherApp extends Application {
 
@@ -16,8 +23,11 @@ public class LauncherApp extends Application {
 
 	private LauncherController controller;
 
+	private ControlDeUSo usoControl;
+
 	@Override
 	public void init() throws Exception {
+		setUsoControl(new ControlDeUSo());
 		controller = new LauncherController();
 	}
 
@@ -35,6 +45,23 @@ public class LauncherApp extends Application {
 		primaryStage.getIcons().add(new Image("assets/textures/launcherIcon.png"));
 		primaryStage.show();
 
+	}
+
+	@Override
+	public void stop() throws Exception {
+		guardarUsos();
+	}
+
+	private void guardarUsos() throws FileNotFoundException {
+		List<Class<? extends GameApplication>> juegos = controller.getModel().getJuegos();
+
+		PrintWriter writer = new PrintWriter(getUsoControl().getFicheroUso());
+		for (int i = 0; i < juegos.size(); i++) {
+			String nombreJuego = juegos.get(i).toString();
+			writer.write(nombreJuego + ":" + getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0));
+
+		}
+		writer.close();
 	}
 
 	private void crearDirPuntuaciones() {
@@ -62,6 +89,14 @@ public class LauncherApp extends Application {
 
 	public static void setPrimaryStage(Stage primaryStage) {
 		LauncherApp.primaryStage = primaryStage;
+	}
+
+	public ControlDeUSo getUsoControl() {
+		return usoControl;
+	}
+
+	public void setUsoControl(ControlDeUSo usoControl) {
+		this.usoControl = usoControl;
 	}
 
 }

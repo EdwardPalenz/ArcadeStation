@@ -412,4 +412,8 @@ public class LauncherController implements Initializable {
 	public BorderPane getView() {
 		return view;
 	}
+
+	public LauncherModel getModel() {
+		return model;
+	}
 }
