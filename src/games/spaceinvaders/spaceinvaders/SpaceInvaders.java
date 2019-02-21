@@ -11,7 +11,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
 
-import games.snakeevolution.ParticleExplosion;
+import games.spaceinvaders.gameFactories.ParticleExplosion;
 import games.spaceinvaders.gameControllers.PlayerControll;
 import games.spaceinvaders.gameControllers.WallControll;
 import games.spaceinvaders.gameFactories.BackgroundFactory;
