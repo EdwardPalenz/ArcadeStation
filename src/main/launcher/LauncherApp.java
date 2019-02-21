@@ -38,6 +38,11 @@ public class LauncherApp extends Application {
 	}
 
 	private void crearDirPuntuaciones() {
+		File dirMyGames = new File(
+				System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games");
+		if (!dirMyGames.exists())
+			dirMyGames.mkdir();
+
 		File dir = new File(APP_SCORE_DIR);
 		try {
 			if (!dir.exists())

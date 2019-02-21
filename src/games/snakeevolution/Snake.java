@@ -1,18 +1,18 @@
 package games.snakeevolution;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Map;
 
-import com.almasb.fxgl.animation.Animation;
 import com.almasb.fxgl.app.DSLKt;
 import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.asset.AssetLoader;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.CollidableComponent;
@@ -20,10 +20,12 @@ import com.almasb.fxgl.entity.view.EntityView;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
 import com.almasb.fxgl.time.TimerAction;
-import com.almasb.fxgl.ui.FontFactory;
 import com.almasb.fxgl.ui.FontType;
 
-import javafx.animation.FadeTransition;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,12 +34,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import main.launcher.LauncherApp;
 
 public class Snake extends GameApplication {
 
 	private static final int SPEED = 100;
 	public static final int SNAKE_SIZE = 25;
 	public static final int SCREEN_SIZE = SNAKE_SIZE * 25;
+	private static final String SCORE_PATHNAME = LauncherApp.APP_SCORE_DIR + File.separator + "SnakeEvolution";
+	private static final String SCORE_FILENAME = "Puntuaciones.txt";
+	
 	Entity apple;
 	Entity cabeza;
 	Entity obstaculo;
@@ -57,7 +63,12 @@ public class Snake extends GameApplication {
 	private ArrayList<Entity> fireList = new ArrayList<Entity>();
 	int cantComido = 0;
 	private ArrayList<Entity> serpiente = new ArrayList<Entity>();
-
+	
+	private IntegerProperty puntuacion;
+	Modelo modelo = new Modelo();
+	
+	File ficheroPuntuacion;
+	
 	@Override
 	protected void initSettings(GameSettings settings) {
 		settings.setWidth(SCREEN_SIZE);
@@ -76,6 +87,13 @@ public class Snake extends GameApplication {
 	@Override
 	protected void initUI() {
 		tituloNiveles();
+		Font fontUI = getUIFactory().newFont(FontType.GAME, 30.0);
+		Text textPunt = getUIFactory().newText("",Color.RED, 22);
+		textPunt.setX(15);
+		textPunt.setY(35);
+		textPunt.setFont(fontUI);
+		textPunt.textProperty().bind(Bindings.concat("Puntuacion: ").concat(puntuacion));
+		getGameScene().addUINode(textPunt);
 	}
 
 	private void tituloNiveles() {
@@ -91,6 +109,9 @@ public class Snake extends GameApplication {
 
 	@Override
 	protected void initGame() {
+		
+		bindeos();
+		
 		getAssetLoader().cache();
 		generarTitulos();
 		music = getAudioPlayer().loopBGM("world1_music.mp3");
@@ -142,6 +163,13 @@ public class Snake extends GameApplication {
 			}
 		}, Duration.millis(SPEED));
 
+	}
+
+	private void bindeos() {
+		puntuacion = new SimpleIntegerProperty(this, "puntuacion");
+
+		modelo.puntuacionProperty().bind(puntuacion);
+		
 	}
 
 	private void generarTitulos() {
@@ -262,6 +290,7 @@ public class Snake extends GameApplication {
 			}
 
 			if (serpiente.get(0).isColliding(apple)) {
+				puntuacion.set(puntuacion.get()+5);
 				cantComido++;
 				apple.removeFromWorld();
 				getAudioPlayer().playSound("eat.wav");
@@ -317,7 +346,8 @@ public class Snake extends GameApplication {
 					}
 				}
 			}
-
+			
+			//CHOQUE CONTRA EL OBSTACULO
 			if (obstaculo != null && !obstaculoList.isEmpty()) {
 				for (int i = 0; i < obstaculoList.size(); i++) {
 					if (cabeza.isColliding(obstaculoList.get(i))) {
@@ -326,8 +356,10 @@ public class Snake extends GameApplication {
 					}
 				}
 			}
+			
+			//GENERAR ALEATORIAMENTE MANZANAS AZULES
 			if (level != 5) {
-				if (blueApple == null && cantComido >= 10 && FXGLMath.randomBoolean(0.002)) {
+				if (blueApple == null && cantComido >= 10 && FXGLMath.randomBoolean(0.001)) {
 					if (serpiente.size() - 1 >= 10) {
 						spawnearBlueApple();
 						puedeBlueApple = true;
@@ -344,9 +376,11 @@ public class Snake extends GameApplication {
 					}
 				}
 			}
+			
 		}
 	}
 
+	//CAMBIO DE NIVEL
 	private void cambiarNivel(int duracion) {
 		level++;
 		if (level == 2) {
@@ -361,6 +395,7 @@ public class Snake extends GameApplication {
 		tituloNiveles();
 	}
 
+	//DESTRUIR COLA
 	private void destruirCola() {
 		int j = serpiente.size() - 1;
 		for (int i = 5; i >= 0; i--) {
@@ -370,6 +405,7 @@ public class Snake extends GameApplication {
 		}
 	}
 
+	//FINALIZAR JUEGO
 	private void finalizarJuego() {
 		movimientoSerpiente.expire();
 		getAudioPlayer().stopMusic(music);
@@ -388,24 +424,58 @@ public class Snake extends GameApplication {
 		getMasterTimer().runOnceAfter(new Runnable() {
 			@Override
 			public void run() {
-				getDisplay().showConfirmationBox("Fin del juego\nÂ¿Volver a empezar?", resp -> {
+				getDisplay().showConfirmationBox("Fin del juego\n¿Volver a empezar?", resp -> {
 					if (resp) {
 						getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 						resetear();
 						startNewGame();
 					} else {
-						exit();
+						getDisplay().showInputBox(
+								"Indroduce tu nombre", nombre -> {
+									if (nombre != null) {
+										try {
+										ficheroPuntuacion = new File(SCORE_PATHNAME);
+
+										if (!ficheroPuntuacion.exists())
+											ficheroPuntuacion.mkdir();
+
+										ficheroPuntuacion = new File(SCORE_PATHNAME + File.separator + SCORE_FILENAME);
+
+										if (!ficheroPuntuacion.exists())
+											ficheroPuntuacion.createNewFile();
+										
+										Task<Void> taskGuardar = new Task<Void>() {
+											@Override
+											protected Void call() throws Exception {
+												Files.write(ficheroPuntuacion.toPath(), (nombre + " " + modelo.getPuntuacion() + "\n").getBytes(),
+														StandardOpenOption.APPEND);
+												return null;
+											}
+										};
+										
+										new Thread(taskGuardar).start();
+
+										taskGuardar.setOnFailed(e -> {
+											e.getSource().getException().printStackTrace();
+										});
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+									}
+									exit();
+								});
 					}
 				});
 			}
 		}, Duration.millis(70 * (serpiente.size() * 2)));
-
 	}
 
+	//SPAWNEAR EXPLOSION
 	private void spawnearExplosion() {
 		DSLKt.spawn("ParticleExplosion", obstaculoList.get(0).getPosition());
 	}
 
+	//RESETEAR
 	private void resetear() {
 		puedeBlueApple = false;
 		serpiente.clear();
@@ -423,6 +493,7 @@ public class Snake extends GameApplication {
 		level = 0;
 	}
 
+	//GENERAR EN EL SNAKE
 	private void generarSnake(int x, int y, Direccion dir, URL url) {
 		Entity snakePart = Entities.builder().at(new Point2D(x, y))
 //				.viewFromNodeWithBBox(new Rectangle(SNAKE_SIZE, SNAKE_SIZE, Color.BLACK))
@@ -433,6 +504,7 @@ public class Snake extends GameApplication {
 		serpiente.add(snakePart);
 	}
 
+	//GENERAR CABEZA
 	private void generarCabeza(int x, int y, Direccion dir, URL url) {
 		cabeza = Entities.builder().at(new Point2D(x, y))
 //				.viewFromNodeWithBBox(new Rectangle(SNAKE_SIZE, SNAKE_SIZE, Color.BLACK))
@@ -444,6 +516,7 @@ public class Snake extends GameApplication {
 		serpiente.get(0).setRotation(-90);
 	}
 
+	//GENERAR COLA
 	private void generarCola() {
 
 		Entity ultima = serpiente.get(serpiente.size() - 1);
@@ -451,9 +524,9 @@ public class Snake extends GameApplication {
 		Point2D newPosition = ultima.getPosition().subtract(new Point2D(dir.getX(), dir.getY()));
 		generarSnake((int) newPosition.getX(), (int) newPosition.getY(), ultima.getObject("direccion"),
 				getClass().getResource("/assets/textures/tail.png"));
-
 	}
 
+	//SPAWNEAR OBSTACULO
 	private void spawnearObstaculo(int x, int y) {
 		ImageView imageView = new ImageView(new Image("/assets/textures/" + 0 + ".gif", 60.0, 60.0, true, false));
 		SpawnData sd = new SpawnData(x, y);
@@ -490,7 +563,7 @@ public class Snake extends GameApplication {
 				} catch (Exception e) {
 					// TODO: handle exception
 					try {
-						this.finalize();
+						exit();
 					} catch (Throwable e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -503,6 +576,7 @@ public class Snake extends GameApplication {
 		obstaculoList.add(obstaculo);
 	}
 
+	//MAIN
 	public static void main(String[] args) {
 		launch(args);
 	}
