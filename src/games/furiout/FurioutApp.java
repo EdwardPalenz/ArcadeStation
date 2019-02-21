@@ -1,5 +1,8 @@
 package games.furiout;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import com.almasb.fxgl.app.DSLKt;
@@ -256,6 +259,19 @@ public class FurioutApp extends GameApplication {
 			getGameScene().removeUINode(text);
 		});
 		transition.play();
+	}
+	
+	private void save(String nombre) {
+		File file = new File(/*LauncherApp.APP_SCORE_DIR + "FuriOut" + File.separator + */"puntuaciones.txt");
+		try {
+			PrintWriter writter = new PrintWriter(file);
+			writter.write(nombre + ": " + puntuacion + "\n");
+			writter.flush();
+			writter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
