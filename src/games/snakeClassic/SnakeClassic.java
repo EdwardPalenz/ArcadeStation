@@ -14,6 +14,7 @@ import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
 
+import games.snakeevolution.Direccion;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
