@@ -1,0 +1,8 @@
+Reglas del FuriOut
+
+Objetivo: Destruir todos los bloques con una pelota evitando que caiga al suelo
+
+Controles:
+
+-A: Mover a la izquierda
+-D: Mover a la derecha

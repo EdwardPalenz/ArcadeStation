@@ -1,0 +1,7 @@
+Reglas del Ajedrez
+
+Objetivo: Ganar a tu contrincante capturando a la pieza del Rey
+
+Controles:
+
+-Raton: Seleccionar pieza y movimiento

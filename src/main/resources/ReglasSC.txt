@@ -1,0 +1,7 @@
+Reglas del Snake
+
+Objetivo: Comer todas las manzanas que puedas evitando chocar con su cuerpo
+
+Controles:
+
+-Flechas de control: Controlar serpiente

@@ -1,0 +1,9 @@
+Reglas del Space Invaders
+
+Objetivo: Derrotar a los marcianos que se acercan a la Tierra mientras esquivas sus disparos
+
+Controles:
+
+-A: Mover a la izquierda
+-D: Mover a la derecha
+-Space: Disparar

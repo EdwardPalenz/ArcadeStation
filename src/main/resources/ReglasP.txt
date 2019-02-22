@@ -1,0 +1,13 @@
+Reglas del Pong
+
+Objetivo: Devolver la pelota e intentar que la pelota pase el bat del contrario
+
+Controles:
+
+Jugador 1
+-W: Mover arriba
+-S: Mover abajo
+
+Jugador 2
+-Flecha Arriba: Mover Arriba
+-Flecha Abajo: Mover Abajo
