@@ -3,9 +3,12 @@ package games.furiout;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
 import com.almasb.fxgl.app.DSLKt;
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.entity.Entities;
@@ -20,12 +23,14 @@ import com.almasb.fxgl.settings.GameSettings;
 import games.furiout.component.BallComponent;
 import games.furiout.component.BatComponent;
 import games.furiout.component.BrickComponent;
+import games.furiout.component.FuryUi;
 import games.furiout.factory.BallFactory;
 import games.furiout.factory.BatFactory;
 import games.furiout.factory.BrickFactory;
 import games.furiout.factory.EndFactory;
 import games.furiout.types.FurioutTypes;
 import javafx.animation.PathTransition;
+import javafx.concurrent.Task;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -44,6 +49,8 @@ public class Furiout extends GameApplication {
 	private int contador = 1;
 	private Music music;
 	private int puntuacion = 0;
+	
+	private FuryUi furyUi;
 
 	private BatComponent getBatControl() {
 		return getGameWorld().getSingleton(FurioutTypes.BAT).get().getComponent(BatComponent.class);
@@ -95,7 +102,10 @@ public class Furiout extends GameApplication {
 		DSLKt.spawn("Ball", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200);
 		DSLKt.spawn("Bat", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100);
 		DSLKt.spawn("End", 0, SCREEN_HEIGHT);
-
+		furyUi = new FuryUi(getGameScene());
+		
+		furyUi.addScore();
+		
 		generaNivel(contador);
 
 	}
@@ -155,13 +165,25 @@ public class Furiout extends GameApplication {
 			break;
 		default:
 			getDisplay().showConfirmationBox(
-					"좭as terminado todos los niveles!.\nPuntuacion: " + puntuacion + " \n 풴olver a jugar?", resp -> {
+					"좭as terminado todos los niveles!. \n 풴olver a jugar?", resp -> {
 						if (resp) {
 							getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 							reset();
 							startNewGame();
 						} else {
-							exit();
+							FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
+								Task<Void> guardarTask = new Task<Void>() {
+
+									@Override
+									protected Void call() throws Exception {
+										furyUi.save(nombre);
+										return null;
+									}
+								};
+								new Thread(guardarTask).start();
+								exit();
+							});
+							
 						}
 					});
 			break;
@@ -202,7 +224,7 @@ public class Furiout extends GameApplication {
 			@Override
 			protected void onCollisionBegin(Entity ball, Entity brick) {
 				brick.getComponent(BrickComponent.class).onHit();
-				puntuacion += 5;
+				furyUi.addPoints();
 			}
 		});
 
@@ -211,14 +233,26 @@ public class Furiout extends GameApplication {
 			protected void onCollisionBegin(Entity ball, Entity End) {
 				getAudioPlayer().stopMusic(music);
 				getAudioPlayer().playSound("gameover.wav");
-				getDisplay().showConfirmationBox("Fin de la partida.\nPuntuacion: " + puntuacion + " \n 풲ry Again?",
+				getDisplay().showConfirmationBox("Fin de la partida.  \n 풲ry Again?",
 						resp -> {
 							if (resp) {
 								getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 								reset();
 								startNewGame();
 							} else {
-								exit();
+								FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
+									Task<Void> guardarTask = new Task<Void>() {
+
+										@Override
+										protected Void call() throws Exception {
+											furyUi.save(nombre);
+											return null;
+										}
+									};
+									new Thread(guardarTask).start();
+									exit();
+								});
+								
 							}
 						});
 
@@ -262,18 +296,7 @@ public class Furiout extends GameApplication {
 		transition.play();
 	}
 
-	private void save(String nombre) {
-		File file = new File(LauncherApp.APP_SCORE_DIR + "FuriOut" + File.separator + "puntuaciones.txt");
-		try {
-			PrintWriter writter = new PrintWriter(file);
-			writter.write(nombre + ": " + puntuacion + "\n");
-			writter.flush();
-			writter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 
 	public static void main(String[] args) {
 		launch(args);

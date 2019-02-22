@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.almasb.fxgl.scene.GameScene;
 import com.almasb.fxgl.texture.Texture;
+import com.almasb.fxgl.ui.FontType;
 import com.almasb.fxgl.ui.UIController;
 
 import games.spaceinvaders.scoreModel.ScoreModel;
@@ -35,7 +36,7 @@ public class GameUi implements UIController {
 
 	@Override
 	public void init() {
-
+		
 	}
 
 	public GameUi(GameScene gameScene) {
@@ -98,7 +99,7 @@ public class GameUi implements UIController {
 				if(!file.exists())
 					file.createNewFile();
 				
-				Files.write(file.toPath(),(string+": "+scoreModel.getScore()+"\n").getBytes(), StandardOpenOption.APPEND);
+				Files.write(file.toPath(),("\n"+string+": "+scoreModel.getScore()+"\n").getBytes(), StandardOpenOption.APPEND);
 				return null;
 			}
 			
