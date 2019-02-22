@@ -24,7 +24,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Ajedrez extends GameApplication {
+public class AjedrezBeta extends GameApplication {
 
 //	private Entity player;
 	public static Entity fichaSeleccionada;
@@ -128,21 +128,21 @@ public class Ajedrez extends GameApplication {
 
 	public static void generarTemporal(Point2D position, Color rgb, boolean enemy) {
 		Entity posibleMov = Entities.builder().at(position)
-				.viewFromNode(new Rectangle(Ajedrez.TILE_SIZE, Ajedrez.TILE_SIZE, rgb)).renderLayer(RenderLayer.TOP)
+				.viewFromNode(new Rectangle(AjedrezBeta.TILE_SIZE, AjedrezBeta.TILE_SIZE, rgb)).renderLayer(RenderLayer.TOP)
 				.with(new SelectableComponent(true)).with("name", "temporal").with("enemy", enemy).buildAndAttach();
-		Ajedrez.temporales.add(posibleMov);
+		AjedrezBeta.temporales.add(posibleMov);
 	}
 
 	public void mover(Entity nuevaPosicion) {
 		Point2D position = nuevaPosicion.getPosition();
 		if (!nuevaPosicion.getBoolean("enemy")) {
 
-			getGameWorld().removeEntities(Ajedrez.temporales);
+			getGameWorld().removeEntities(AjedrezBeta.temporales);
 			fichaSeleccionada.setPosition(position);
 
 		} else {
 
-			getGameWorld().removeEntities(Ajedrez.temporales);
+			getGameWorld().removeEntities(AjedrezBeta.temporales);
 			Entity enemiga = null;
 
 			if (position.getX() == 0 && position.getY() == 0) {
@@ -152,10 +152,10 @@ public class Ajedrez extends GameApplication {
 			}
 
 			if (fichaSeleccionada.getString("color").equals("blanca")) {
-				Ajedrez.negrasEliminadas.add(enemiga);
+				AjedrezBeta.negrasEliminadas.add(enemiga);
 
 			} else {
-				Ajedrez.negrasEliminadas.add(enemiga);
+				AjedrezBeta.negrasEliminadas.add(enemiga);
 
 			}
 
@@ -163,7 +163,7 @@ public class Ajedrez extends GameApplication {
 			fichaSeleccionada.setPosition(position);
 		}
 
-		Ajedrez.temporales.clear();
+		AjedrezBeta.temporales.clear();
 		String color = fichaSeleccionada.getString("color");
 //		if (!Rey.hayJaque(color,getGameWorld())) {
 		cambioTurno(color);

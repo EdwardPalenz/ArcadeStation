@@ -5,7 +5,7 @@ import java.util.List;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.GameWorld;
 
-import games.ajedrez.Ajedrez;
+import games.ajedrez.AjedrezBeta;
 import javafx.geometry.Point2D;
 
 public class Caballo {
@@ -15,7 +15,7 @@ public class Caballo {
 		Point2D posPosible = new Point2D(posCaballo.getX(), posCaballo.getY());
 
 		// Primer movimiento posible ^^<
-		posPosible = posPosible.add(new Point2D(-Ajedrez.TILE_SIZE, (-2 * Ajedrez.TILE_SIZE)));
+		posPosible = posPosible.add(new Point2D(-AjedrezBeta.TILE_SIZE, (-2 * AjedrezBeta.TILE_SIZE)));
 		List<Entity> entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
 		if (posPosible.getX() >= 0 && posPosible.getY() >= 0) {
@@ -23,7 +23,7 @@ public class Caballo {
 		}
 
 		// segundo movimiento posible ^^>
-		posPosible = posCaballo.add(new Point2D(Ajedrez.TILE_SIZE, (-2 * Ajedrez.TILE_SIZE)));
+		posPosible = posCaballo.add(new Point2D(AjedrezBeta.TILE_SIZE, (-2 * AjedrezBeta.TILE_SIZE)));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -32,7 +32,7 @@ public class Caballo {
 		}
 		
 		// tercero movimiento posible ^>>
-		posPosible = posCaballo.add(new Point2D(2*Ajedrez.TILE_SIZE, -Ajedrez.TILE_SIZE));
+		posPosible = posCaballo.add(new Point2D(2*AjedrezBeta.TILE_SIZE, -AjedrezBeta.TILE_SIZE));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -42,7 +42,7 @@ public class Caballo {
 		
 		
 		// cuarto movimiento posible v>>
-		posPosible = posCaballo.add(new Point2D(2*Ajedrez.TILE_SIZE, Ajedrez.TILE_SIZE));
+		posPosible = posCaballo.add(new Point2D(2*AjedrezBeta.TILE_SIZE, AjedrezBeta.TILE_SIZE));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -51,7 +51,7 @@ public class Caballo {
 		}
 		
 		// quinto movimiento posible vv>
-		posPosible = posCaballo.add(new Point2D(Ajedrez.TILE_SIZE, 2*Ajedrez.TILE_SIZE));
+		posPosible = posCaballo.add(new Point2D(AjedrezBeta.TILE_SIZE, 2*AjedrezBeta.TILE_SIZE));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -60,7 +60,7 @@ public class Caballo {
 		}
 
 		// sexto movimiento posible vv<
-		posPosible = posCaballo.add(new Point2D(-Ajedrez.TILE_SIZE, 2*Ajedrez.TILE_SIZE));
+		posPosible = posCaballo.add(new Point2D(-AjedrezBeta.TILE_SIZE, 2*AjedrezBeta.TILE_SIZE));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -69,7 +69,7 @@ public class Caballo {
 		}
 		
 		// septimo movimiento posible v<<
-		posPosible = posCaballo.add(new Point2D(-2*Ajedrez.TILE_SIZE, Ajedrez.TILE_SIZE));
+		posPosible = posCaballo.add(new Point2D(-2*AjedrezBeta.TILE_SIZE, AjedrezBeta.TILE_SIZE));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -78,7 +78,7 @@ public class Caballo {
 		}	
 		
 		// octavo movimiento posible ^<<
-		posPosible = posCaballo.add(new Point2D(-2*Ajedrez.TILE_SIZE, -Ajedrez.TILE_SIZE));
+		posPosible = posCaballo.add(new Point2D(-2*AjedrezBeta.TILE_SIZE, -AjedrezBeta.TILE_SIZE));
 
 		entitiesAt = gameWorld.getEntitiesAt(posPosible);
 
@@ -93,11 +93,11 @@ public class Caballo {
 			for (int j = 0; j < entitiesAt.size(); j++) {
 				if (entitiesAt.get(j).getProperties().exists("color")
 						&& !entitiesAt.get(j).getString("color").equals(caballo.getString("color"))) {
-					Ajedrez.generarTemporal(posPosible, Ajedrez.temporalEnemigo, true);
+					AjedrezBeta.generarTemporal(posPosible, AjedrezBeta.temporalEnemigo, true);
 				}
 			}
 		} else {
-			Ajedrez.generarTemporal(posPosible, Ajedrez.temporalVacio, false);
+			AjedrezBeta.generarTemporal(posPosible, AjedrezBeta.temporalVacio, false);
 		}
 	}
 

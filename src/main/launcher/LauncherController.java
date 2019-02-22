@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 import com.almasb.fxgl.app.GameApplication;
 
-import games.ajedrez.Ajedrez;
+import games.ajedrez.AjedrezBeta;
 import games.furiout.Furiout;
 import games.pong.PongGame;
 import games.snakeClassic.SnakeClassic;
@@ -225,7 +225,7 @@ public class LauncherController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void getJuegos() {
 
-		model.juegosProperty().addAll(SnakeClassic.class, SnakeEvolution.class, Furiout.class, Ajedrez.class,
+		model.juegosProperty().addAll(SnakeClassic.class, SnakeEvolution.class, Furiout.class, AjedrezBeta.class,
 				SpaceInvaders.class, PongGame.class);
 
 		model.previewsProperty().addAll(

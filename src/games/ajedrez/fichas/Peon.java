@@ -5,7 +5,7 @@ import java.util.List;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.GameWorld;
 
-import games.ajedrez.Ajedrez;
+import games.ajedrez.AjedrezBeta;
 import javafx.geometry.Point2D;
 
 public class Peon {
@@ -19,19 +19,19 @@ public class Peon {
 		} else {
 			dirección = 1;
 		}
-		int movimiento = dirección * Ajedrez.TILE_SIZE;
+		int movimiento = dirección * AjedrezBeta.TILE_SIZE;
 
 //		Si está en su casilla de origen un peón se puede mover dos casillas, siempre y cuando no haya ningun enemigo en la
 //		casilla correspondiente
 		;
-		if ((peon.getString("color").equals("blanca") && peon.getY() == 6 * Ajedrez.TILE_SIZE)
-				|| (peon.getString("color").equals("negra") && peon.getY() == Ajedrez.TILE_SIZE)) {
+		if ((peon.getString("color").equals("blanca") && peon.getY() == 6 * AjedrezBeta.TILE_SIZE)
+				|| (peon.getString("color").equals("negra") && peon.getY() == AjedrezBeta.TILE_SIZE)) {
 			if (gameWorld.getEntitiesAt(new Point2D(peon.getX(), peon.getY() + 2 * movimiento)).size() < 1
 					&& gameWorld.getEntitiesAt(new Point2D(peon.getX(), peon.getY() + movimiento)).size() < 1) {
 
 				Point2D position = new Point2D(peon.getX(), peon.getY() + 2 * movimiento);
 
-				Ajedrez.generarTemporal(position, Ajedrez.temporalVacio, false);
+				AjedrezBeta.generarTemporal(position, AjedrezBeta.temporalVacio, false);
 			}
 		}
 
@@ -39,12 +39,12 @@ public class Peon {
 		List<Entity> entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX(), peon.getY() + movimiento));
 		if (entitiesAt.size() < 1) {
 				Point2D position = new Point2D(peon.getX(), peon.getY() + movimiento);
-				Ajedrez.generarTemporal(position, Ajedrez.temporalVacio, false);
+				AjedrezBeta.generarTemporal(position, AjedrezBeta.temporalVacio, false);
 			
 		}
 
 //		Si existe un enemigo en una casilla diagonal a la del peón en cuestión, este podra moverse ahí para matarlo
-		entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX() + Ajedrez.TILE_SIZE, peon.getY() + movimiento));
+		entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX() + AjedrezBeta.TILE_SIZE, peon.getY() + movimiento));
 		if (entitiesAt.size() > 0) {
 
 			boolean enemigo = false;
@@ -54,12 +54,12 @@ public class Peon {
 			}
 
 			if (enemigo) {
-				Point2D position = new Point2D(peon.getX() + Ajedrez.TILE_SIZE, peon.getY() + movimiento);
-				Ajedrez.generarTemporal(position, Ajedrez.temporalEnemigo, enemigo);
+				Point2D position = new Point2D(peon.getX() + AjedrezBeta.TILE_SIZE, peon.getY() + movimiento);
+				AjedrezBeta.generarTemporal(position, AjedrezBeta.temporalEnemigo, enemigo);
 			}
 		}
 
-		entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX() - Ajedrez.TILE_SIZE, peon.getY() + movimiento));
+		entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX() - AjedrezBeta.TILE_SIZE, peon.getY() + movimiento));
 		if (entitiesAt.size() > 0) {
 
 			boolean enemigo = false;
@@ -70,9 +70,9 @@ public class Peon {
 			}
 
 			if (enemigo) {
-				Point2D position = new Point2D(peon.getX() - Ajedrez.TILE_SIZE, peon.getY() + movimiento);
+				Point2D position = new Point2D(peon.getX() - AjedrezBeta.TILE_SIZE, peon.getY() + movimiento);
 
-				Ajedrez.generarTemporal(position, Ajedrez.temporalEnemigo, enemigo);
+				AjedrezBeta.generarTemporal(position, AjedrezBeta.temporalEnemigo, enemigo);
 			}
 		}
 
@@ -82,20 +82,20 @@ public class Peon {
 		Point2D position = nuevaPosicion.getPosition();
 		if (!nuevaPosicion.getBoolean("enemy")) {
 
-			gameWorld.removeEntities(Ajedrez.temporales);
+			gameWorld.removeEntities(AjedrezBeta.temporales);
 			fichaSeleccionada.setPosition(position);
 
 		} else {
-			gameWorld.removeEntities(Ajedrez.temporales);
+			gameWorld.removeEntities(AjedrezBeta.temporales);
 			Entity enemiga = gameWorld.getEntitiesAt(position).get(0);
 
 			if (fichaSeleccionada.getString("color").equals("blanca")) {
 
-				Ajedrez.negrasEliminadas.add(enemiga);
+				AjedrezBeta.negrasEliminadas.add(enemiga);
 
 			} else {
 
-				Ajedrez.negrasEliminadas.add(enemiga);
+				AjedrezBeta.negrasEliminadas.add(enemiga);
 
 			}
 
@@ -103,6 +103,6 @@ public class Peon {
 			fichaSeleccionada.setPosition(position);
 		}
 
-		Ajedrez.temporales.clear();
+		AjedrezBeta.temporales.clear();
 	}
 }

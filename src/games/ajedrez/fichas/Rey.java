@@ -5,7 +5,7 @@ import java.util.List;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.GameWorld;
 
-import games.ajedrez.Ajedrez;
+import games.ajedrez.AjedrezBeta;
 import javafx.geometry.Point2D;
 
 public class Rey {
@@ -15,56 +15,56 @@ public class Rey {
 		Point2D posicionRey = rey.getPosition();
 
 //		primer movimiento ^
-		Point2D posicionPosible = posicionRey.add(new Point2D(0, -Ajedrez.TILE_SIZE));
+		Point2D posicionPosible = posicionRey.add(new Point2D(0, -AjedrezBeta.TILE_SIZE));
 
 		if (posicionPosible.getY() >= 0) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 //		segundo movimiento ^>
-		posicionPosible = posicionRey.add(new Point2D(Ajedrez.TILE_SIZE, -Ajedrez.TILE_SIZE));
+		posicionPosible = posicionRey.add(new Point2D(AjedrezBeta.TILE_SIZE, -AjedrezBeta.TILE_SIZE));
 
 		if (posicionPosible.getY() >= 0 && posicionPosible.getX() < width) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 //		tercer movimiento >
-		posicionPosible = posicionRey.add(new Point2D(Ajedrez.TILE_SIZE, 0));
+		posicionPosible = posicionRey.add(new Point2D(AjedrezBeta.TILE_SIZE, 0));
 
 		if (posicionPosible.getX() < width) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 //		cuarto movimiento >v
-		posicionPosible = posicionRey.add(new Point2D(Ajedrez.TILE_SIZE, Ajedrez.TILE_SIZE));
+		posicionPosible = posicionRey.add(new Point2D(AjedrezBeta.TILE_SIZE, AjedrezBeta.TILE_SIZE));
 
 		if (posicionPosible.getX() < width && posicionPosible.getY() < height) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 //		quinto movimiento v
-		posicionPosible = posicionRey.add(new Point2D(0, Ajedrez.TILE_SIZE));
+		posicionPosible = posicionRey.add(new Point2D(0, AjedrezBeta.TILE_SIZE));
 
 		if (posicionPosible.getY() < height) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 // 		sexto movimiento v<
-		posicionPosible = posicionRey.add(new Point2D(-Ajedrez.TILE_SIZE, Ajedrez.TILE_SIZE));
+		posicionPosible = posicionRey.add(new Point2D(-AjedrezBeta.TILE_SIZE, AjedrezBeta.TILE_SIZE));
 
 		if (posicionPosible.getX() >= 0 && posicionPosible.getY() < height) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 // 		septimo movimiento <
-		posicionPosible = posicionRey.add(new Point2D(-Ajedrez.TILE_SIZE, 0));
+		posicionPosible = posicionRey.add(new Point2D(-AjedrezBeta.TILE_SIZE, 0));
 
 		if (posicionPosible.getX() >= 0) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
 		}
 
 // 		octava movimiento <^
-		posicionPosible = posicionRey.add(new Point2D(-Ajedrez.TILE_SIZE, -Ajedrez.TILE_SIZE));
+		posicionPosible = posicionRey.add(new Point2D(-AjedrezBeta.TILE_SIZE, -AjedrezBeta.TILE_SIZE));
 
 		if (posicionPosible.getX() >= 0 && posicionPosible.getY() >= 0) {
 			comprobarPosicion(gameWorld, posicionPosible, rey);
@@ -78,19 +78,19 @@ public class Rey {
 			for (int i = 0; i < entitiesAt.size(); i++) {
 				if (entitiesAt.get(i).getProperties().exists("color")
 						&& !entitiesAt.get(i).getString("color").equals(rey.getString("color"))) {
-					Ajedrez.generarTemporal(posicionPosible, Ajedrez.temporalEnemigo, true);
+					AjedrezBeta.generarTemporal(posicionPosible, AjedrezBeta.temporalEnemigo, true);
 
 				}
 			}
 		} else {
-			Ajedrez.generarTemporal(posicionPosible, Ajedrez.temporalVacio, false);
+			AjedrezBeta.generarTemporal(posicionPosible, AjedrezBeta.temporalVacio, false);
 		}
 	}
 
 	public static boolean hayJaque(String color, GameWorld gameWorld) {
 		boolean escape = true;
 		boolean peligro = false;
-		Ajedrez.reyEnPeligro = false;
+		AjedrezBeta.reyEnPeligro = false;
 		Entity rey = null;
 
 		@SuppressWarnings("unused")
@@ -114,7 +114,7 @@ public class Rey {
 //		Primero comprobará la casilla inmediatamene arriba, si es un rey, reina o una torre se considera que esta en peligro
 //		en las casillas mas arriba solo lo considerará si es una reina o una torre y no hay un aliado bloqueando el camino
 		boolean arrSegura = false;
-		Point2D pos = rey.getPosition().add(0, -Ajedrez.TILE_SIZE);
+		Point2D pos = rey.getPosition().add(0, -AjedrezBeta.TILE_SIZE);
 		List<Entity> entitiesAt = gameWorld.getEntitiesAt(pos);
 
 		if (entitiesAt.size() > 0) {
@@ -129,7 +129,7 @@ public class Rey {
 					if (name.equals("reina") || name.equals("torre") || name.equals("rey")) {
 						arrSegura = false;
 						peligro = true;
-						Ajedrez.reyEnPeligro = true;
+						AjedrezBeta.reyEnPeligro = true;
 						System.out.println("Peligro arriba");
 					}
 
@@ -139,7 +139,7 @@ public class Rey {
 
 //		Abajo
 		boolean abajoSegura = false;
-		pos = rey.getPosition().add(0, Ajedrez.TILE_SIZE);
+		pos = rey.getPosition().add(0, AjedrezBeta.TILE_SIZE);
 		entitiesAt = gameWorld.getEntitiesAt(pos);
 
 		if (entitiesAt.size() > 0) {
@@ -154,7 +154,7 @@ public class Rey {
 					if (name.equals("reina") || name.equals("torre") || name.equals("rey")) {
 						abajoSegura = false;
 						peligro = true;
-						Ajedrez.reyEnPeligro = true;
+						AjedrezBeta.reyEnPeligro = true;
 						System.out.println("Peligro abajo");
 					}
 
@@ -164,7 +164,7 @@ public class Rey {
 
 //		Derecha
 		boolean derechaSegura = false;
-		pos = rey.getPosition().add(Ajedrez.TILE_SIZE, 0);
+		pos = rey.getPosition().add(AjedrezBeta.TILE_SIZE, 0);
 		entitiesAt = gameWorld.getEntitiesAt(pos);
 
 		if (entitiesAt.size() > 0) {
@@ -179,7 +179,7 @@ public class Rey {
 					if (name.equals("reina") || name.equals("torre") || name.equals("rey")) {
 						derechaSegura = false;
 						peligro = true;
-						Ajedrez.reyEnPeligro = true;
+						AjedrezBeta.reyEnPeligro = true;
 						System.out.println("Peligro derecha");
 					}
 
@@ -188,7 +188,7 @@ public class Rey {
 
 //			Izquierda
 			boolean IzquierdaSegura = false;
-			pos = rey.getPosition().add(-Ajedrez.TILE_SIZE, 0);
+			pos = rey.getPosition().add(-AjedrezBeta.TILE_SIZE, 0);
 			entitiesAt = gameWorld.getEntitiesAt(pos);
 
 			while (pos.getX() >= 0) {
@@ -206,7 +206,7 @@ public class Rey {
 							if (name.equals("reina") || name.equals("torre") || name.equals("rey")) {
 								IzquierdaSegura = false;
 								peligro = true;
-								Ajedrez.reyEnPeligro = true;
+								AjedrezBeta.reyEnPeligro = true;
 								System.out.println("Peligro Izquierda");
 							}
 
@@ -214,7 +214,7 @@ public class Rey {
 					}
 				}
 			}
-			pos = pos.add(-Ajedrez.TILE_SIZE, 0);
+			pos = pos.add(-AjedrezBeta.TILE_SIZE, 0);
 			entitiesAt = gameWorld.getEntitiesAt(pos);
 		}
 
