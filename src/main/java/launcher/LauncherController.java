@@ -23,6 +23,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -38,7 +39,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import launcher.puntuaciones.Puntuaciones;
 
 public class LauncherController implements Initializable {
 
@@ -386,7 +389,20 @@ public class LauncherController implements Initializable {
 
 	@FXML
 	void onPuntuacionesAction(ActionEvent event) {
+		try {
+			Puntuaciones puntuaciones = new Puntuaciones(model.getJuegos());
 
+			Stage puntuacionesStage = new Stage();
+			puntuacionesStage.setTitle("Puntuaciones");
+			puntuacionesStage.initOwner(LauncherApp.getPrimaryStage());
+			puntuacionesStage.setScene(new Scene(puntuaciones.getView()));
+			puntuacionesStage.getScene().getStylesheets()
+					.addAll(LauncherApp.getPrimaryStage().getScene().getStylesheets());
+			puntuacionesStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
