@@ -1,6 +1,6 @@
-SnakeClassic:1
-SnakeEvolution:1
+SnakeClassic:2
+SnakeEvolution:3
 Furiout:1
 AjedrezBeta:0
-SpaceInvaders:0
+SpaceInvaders:1
 PongGame:1

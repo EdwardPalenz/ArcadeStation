@@ -1,9 +1,14 @@
 package games.snakeClassic;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,7 +19,6 @@ import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
 
-import games.snakeClassic.Direccion;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.geometry.Point2D;
@@ -29,7 +33,8 @@ import launcher.LauncherApp;
 
 public class SnakeClassic extends GameApplication {
 
-	private static final String SCORE_PATHNAME = LauncherApp.APP_SCORE_DIR + File.separator + "SankeClassic";
+	private static final String SCORE_PATHNAME = LauncherApp.APP_SCORE_DIR + File.separator
+			+ SnakeClassic.class.getSimpleName();
 	private static final String SCORE_FILENAME = "Puntuaciones.txt";
 	private static final int SPEED = 85;
 	public static final int SNAKE_SIZE = 16;
@@ -172,15 +177,14 @@ public class SnakeClassic extends GameApplication {
 						startNewGame();
 
 					} else {
-						getDisplay().showInputBox(
-								"Indroduce tu nombre para guardar tu puntuaci�n m�s alta (" + highScore + ")", name -> {
-									if (name != null) {
-										GuardarPuntuacion(name);
+						getDisplay().showInputBox("Indroduce tu nombre. (HighScore: " + highScore + ")", name -> {
+							if (name != null && !name.isEmpty()) {
+								GuardarPuntuacion(name);
 
-									}
+							}
 
-									exit();
-								});
+							exit();
+						});
 					}
 				});
 			}
@@ -201,12 +205,25 @@ public class SnakeClassic extends GameApplication {
 
 				ficheroPuntuacion = new File(SCORE_PATHNAME + File.separator + SCORE_FILENAME);
 
-				if (!ficheroPuntuacion.exists())
+				List<String> s = new ArrayList<String>();
+
+				if (!ficheroPuntuacion.exists()) {
 					ficheroPuntuacion.createNewFile();
+				} else {
+					s = Files.readAllLines(ficheroPuntuacion.toPath(), Charset.availableCharsets().get("UTF-8"));
+				}
 
-				Files.write(ficheroPuntuacion.toPath(), (name + " " + highScore + "\n").getBytes(),
-						StandardOpenOption.APPEND);
+				s.add(name + ":" + highScore);
 
+				PrintStream fileStream = new PrintStream(ficheroPuntuacion);
+
+				for (String string : s) {
+					System.out.println(string);
+					fileStream.println(string);
+
+				}
+
+				fileStream.close();
 				return null;
 			}
 		};
@@ -380,5 +397,9 @@ public class SnakeClassic extends GameApplication {
 						new Image("/games/snakeClassic/snakeClassic.png", SNAKE_SIZE, SNAKE_SIZE, false, false)))
 				.buildAndAttach();
 		serpiente.add(snakePart);
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 }

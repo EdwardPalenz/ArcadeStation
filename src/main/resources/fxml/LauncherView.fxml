@@ -46,7 +46,7 @@
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../assets/textures/launcherLeft.png" />
+                  <Image url="@../assets/textures/launcherLeft.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -59,7 +59,7 @@
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../assets/textures/launcherRight.png" />
+                  <Image url="@../assets/textures/launcherRight.png" />
                </image>
             </ImageView>
          </graphic></Button>

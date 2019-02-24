@@ -7,6 +7,7 @@ import java.nio.file.StandardOpenOption;
 import com.almasb.fxgl.scene.GameScene;
 import com.almasb.fxgl.ui.UIController;
 
+import games.furiout.Furiout;
 import games.furiout.factory.ScoreFuryModel;
 
 import javafx.beans.binding.Bindings;
@@ -22,15 +23,16 @@ public class FuryUi implements UIController {
 
 	private GameScene gameScene;
 	private double cordinateY = 720;
+
 	@Override
 	public void init() {
 
 	}
-	
+
 	public FuryUi(GameScene gameScene) {
 		this.gameScene = gameScene;
 	}
-	
+
 	public void addScore() {
 		scoreLabel.setLayoutX(510);
 		scoreLabel.setLayoutY(cordinateY - 10);
@@ -43,29 +45,29 @@ public class FuryUi implements UIController {
 	public void addPoints() {
 		scoreModel.setScore(scoreModel.getScore() + 5);
 	}
-	
+
 	public void save(String nombre) {
-		Task<Void> taskGuardar=new Task<Void>() {
+		Task<Void> taskGuardar = new Task<Void>() {
 
 			@Override
 			protected Void call() throws Exception {
-				File file = new File(LauncherApp.APP_SCORE_DIR  + File.separator + "Fury Out");
-				
-				if(!file.exists())
+				File file = new File(LauncherApp.APP_SCORE_DIR + File.separator + Furiout.class.getSimpleName());
+
+				if (!file.exists())
 					file.mkdir();
-				
-				file=new File(LauncherApp.APP_SCORE_DIR  + File.separator + "Fury Out"+File.separator+"puntuaciones.txt");
-				if(!file.exists())
+
+				file = new File(file.toPath() + File.separator + "puntuaciones.txt");
+
+				if (!file.exists())
 					file.createNewFile();
-				
-				Files.write(file.toPath(),("\n"+nombre+": "+scoreModel.getScore()+"\n").getBytes(), StandardOpenOption.APPEND);
+
+				Files.write(file.toPath(), (nombre + ":" + scoreModel.getScore() + "\n").getBytes(),
+						StandardOpenOption.APPEND);
 				return null;
 			}
-			
+
 		};
 		new Thread(taskGuardar).start();
 	}
-	
-	
 
 }

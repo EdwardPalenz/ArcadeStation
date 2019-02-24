@@ -1,10 +1,5 @@
 package games.furiout;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
 import com.almasb.fxgl.app.DSLKt;
@@ -40,7 +35,6 @@ import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import launcher.LauncherApp;
 
 public class Furiout extends GameApplication {
 
@@ -48,7 +42,6 @@ public class Furiout extends GameApplication {
 	public final int SCREEN_WIDTH = 600;
 	private int contador = 1;
 	private Music music;
-	private int puntuacion = 0;
 	
 	private FuryUi furyUi;
 
@@ -275,7 +268,6 @@ public class Furiout extends GameApplication {
 
 	private void reset() {
 		contador = 1;
-		puntuacion = 0;
 	}
 
 	@Override

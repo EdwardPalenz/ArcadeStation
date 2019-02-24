@@ -2,7 +2,6 @@ package games.furiout.component;
 
 import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.entity.Entity;
 
 public class BrickComponent extends Component {
 

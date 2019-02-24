@@ -3,7 +3,6 @@ package games.spaceinvaders.gameUi;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
@@ -11,10 +10,10 @@ import java.util.List;
 
 import com.almasb.fxgl.scene.GameScene;
 import com.almasb.fxgl.texture.Texture;
-import com.almasb.fxgl.ui.FontType;
 import com.almasb.fxgl.ui.UIController;
 
 import games.spaceinvaders.scoreModel.ScoreModel;
+import games.spaceinvaders.spaceinvaders.SpaceInvaders;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
@@ -36,7 +35,7 @@ public class GameUi implements UIController {
 
 	@Override
 	public void init() {
-		
+
 	}
 
 	public GameUi(GameScene gameScene) {
@@ -69,7 +68,7 @@ public class GameUi implements UIController {
 	public void addPoints() {
 		scoreModel.setScore(scoreModel.getScore() + 50);
 	}
-	
+
 	public void removePoints() {
 		scoreModel.setScore(scoreModel.getScore() - 10);
 	}
@@ -78,36 +77,35 @@ public class GameUi implements UIController {
 		Texture vidaFuera = lives.get(lives.size() - 1);
 
 		lives.remove(vidaFuera);
-		
-		scoreModel.setScore(scoreModel.getScore()-300);
+
+		scoreModel.setScore(scoreModel.getScore() - 300);
 
 		gameScene.removeUINode(vidaFuera);
 
 	}
 
 	public void savePoints(String string) throws IOException {
-		Task<Void> taskGuardar=new Task<Void>() {
+		Task<Void> taskGuardar = new Task<Void>() {
 
 			@Override
 			protected Void call() throws Exception {
-				File file = new File(LauncherApp.APP_SCORE_DIR  + File.separator + "Space Invaders");
-				
-				if(!file.exists())
+				File file = new File(LauncherApp.APP_SCORE_DIR + File.separator + SpaceInvaders.class.getSimpleName());
+
+				if (!file.exists())
 					file.mkdir();
-				
-				file=new File(LauncherApp.APP_SCORE_DIR  + File.separator + "Space Invaders"+File.separator+"puntuaciones.txt");
-				if(!file.exists())
+
+				file = new File(file.toPath() + File.separator + "puntuaciones.txt");
+				if (!file.exists())
 					file.createNewFile();
-				
-				Files.write(file.toPath(),("\n"+string+": "+scoreModel.getScore()+"\n").getBytes(), StandardOpenOption.APPEND);
+
+				Files.write(file.toPath(), (string + ":" + scoreModel.getScore() + "\n").getBytes(),
+						StandardOpenOption.APPEND);
 				return null;
 			}
-			
+
 		};
 		new Thread(taskGuardar).start();
-		
-		
-	
+
 	}
 
 	public List<Texture> getLives() {

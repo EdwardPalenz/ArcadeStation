@@ -398,6 +398,7 @@ public class LauncherController implements Initializable {
 			puntuacionesStage.setScene(new Scene(puntuaciones.getView()));
 			puntuacionesStage.getScene().getStylesheets()
 					.addAll(LauncherApp.getPrimaryStage().getScene().getStylesheets());
+
 			puntuacionesStage.show();
 
 		} catch (IOException e) {
