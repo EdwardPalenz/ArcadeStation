@@ -1,11 +1,12 @@
 package games.snakeevolution;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.almasb.fxgl.app.DSLKt;
 import com.almasb.fxgl.app.GameApplication;
@@ -43,7 +44,7 @@ public class SnakeEvolution extends GameApplication {
 	public static final int SCREEN_SIZE = SNAKE_SIZE * 25;
 	private static final String SCORE_PATHNAME = LauncherApp.APP_SCORE_DIR + File.separator
 			+ SnakeEvolution.class.getSimpleName();
-	private static final String SCORE_FILENAME = "Puntuaciones.txt";
+	private static final String SCORE_FILENAME = "puntuaciones.txt";
 
 	private Entity apple;
 	private Entity cabeza;
@@ -433,41 +434,52 @@ public class SnakeEvolution extends GameApplication {
 					} else {
 						getDisplay().showInputBox("Indroduce tu nombre", nombre -> {
 							if (nombre != null) {
-								try {
-									ficheroPuntuacion = new File(SCORE_PATHNAME);
 
-									if (!ficheroPuntuacion.exists())
-										ficheroPuntuacion.mkdir();
+								ficheroPuntuacion = new File(SCORE_PATHNAME);
 
-									ficheroPuntuacion = new File(SCORE_PATHNAME + File.separator + SCORE_FILENAME);
+								if (!ficheroPuntuacion.exists())
+									ficheroPuntuacion.mkdir();
 
-									if (!ficheroPuntuacion.exists())
-										ficheroPuntuacion.createNewFile();
+								ficheroPuntuacion = new File(SCORE_PATHNAME + File.separator + SCORE_FILENAME);
 
-									Task<Void> taskGuardar = new Task<Void>() {
-										@Override
-										protected Void call() throws Exception {
-											Files.write(ficheroPuntuacion.toPath(),
-													(nombre + ":" + modelo.getPuntuacion() + "\n").getBytes(),
-													StandardOpenOption.APPEND);
-											return null;
+								Task<Void> taskGuardar = new Task<Void>() {
+									@Override
+									protected Void call() throws Exception {
+										List<String> s = new ArrayList<String>();
+
+										if (!ficheroPuntuacion.exists()) {
+											ficheroPuntuacion.createNewFile();
+										} else {
+											s = Files.readAllLines(ficheroPuntuacion.toPath(),
+													Charset.availableCharsets().get("UTF-8"));
 										}
-									};
 
-									new Thread(taskGuardar).start();
+										s.add(nombre + ":" + modelo.getPuntuacion());
 
-									taskGuardar.setOnFailed(e -> {
-										e.getSource().getException().printStackTrace();
-										exit();
-									});
+										PrintStream fileStream = new PrintStream(ficheroPuntuacion);
 
-									taskGuardar.setOnSucceeded(e -> {
-										exit();
-									});
+										for (String string : s) {
+											System.out.println(string);
+											fileStream.println(string);
 
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+										}
+
+										fileStream.close();
+										return null;
+									}
+								};
+
+								new Thread(taskGuardar).start();
+
+								taskGuardar.setOnFailed(e -> {
+									e.getSource().getException().printStackTrace();
+									exit();
+								});
+
+								taskGuardar.setOnSucceeded(e -> {
+									exit();
+								});
+
 							}
 
 						});

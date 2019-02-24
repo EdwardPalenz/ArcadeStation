@@ -3,8 +3,9 @@ package games.spaceinvaders.gameUi;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class GameUi implements UIController {
 
 	}
 
-	public void savePoints(String string) throws IOException {
+	public void savePoints(String nombre) throws IOException {
 		Task<Void> taskGuardar = new Task<Void>() {
 
 			@Override
@@ -95,11 +96,26 @@ public class GameUi implements UIController {
 					file.mkdir();
 
 				file = new File(file.toPath() + File.separator + "puntuaciones.txt");
-				if (!file.exists())
-					file.createNewFile();
 
-				Files.write(file.toPath(), (string + ":" + scoreModel.getScore() + "\n").getBytes(),
-						StandardOpenOption.APPEND);
+				List<String> s = new ArrayList<String>();
+
+				if (!file.exists()) {
+					file.createNewFile();
+				} else {
+					s = Files.readAllLines(file.toPath(), Charset.availableCharsets().get("UTF-8"));
+				}
+
+				s.add(nombre + ":" + scoreModel.getScore());
+
+				PrintStream fileStream = new PrintStream(file);
+
+				for (String string : s) {
+					System.out.println(string);
+					fileStream.println(string);
+
+				}
+
+				fileStream.close();
 				return null;
 			}
 

@@ -1,15 +1,17 @@
 package games.furiout.component;
 
 import java.io.File;
+import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.almasb.fxgl.scene.GameScene;
 import com.almasb.fxgl.ui.UIController;
 
 import games.furiout.Furiout;
 import games.furiout.factory.ScoreFuryModel;
-
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
@@ -58,11 +60,26 @@ public class FuryUi implements UIController {
 
 				file = new File(file.toPath() + File.separator + "puntuaciones.txt");
 
-				if (!file.exists())
-					file.createNewFile();
+				List<String> s = new ArrayList<String>();
 
-				Files.write(file.toPath(), (nombre + ":" + scoreModel.getScore() + "\n").getBytes(),
-						StandardOpenOption.APPEND);
+				if (!file.exists()) {
+					file.createNewFile();
+				} else {
+					s = Files.readAllLines(file.toPath(), Charset.availableCharsets().get("UTF-8"));
+				}
+
+				s.add(nombre + ":" + scoreModel.getScore());
+
+				PrintStream fileStream = new PrintStream(file);
+
+				for (String string : s) {
+					System.out.println(string);
+					fileStream.println(string);
+
+				}
+
+				fileStream.close();
+
 				return null;
 			}
 

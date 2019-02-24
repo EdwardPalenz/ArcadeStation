@@ -1,9 +1,6 @@
 package games.snakeClassic;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -35,7 +32,7 @@ public class SnakeClassic extends GameApplication {
 
 	private static final String SCORE_PATHNAME = LauncherApp.APP_SCORE_DIR + File.separator
 			+ SnakeClassic.class.getSimpleName();
-	private static final String SCORE_FILENAME = "Puntuaciones.txt";
+	private static final String SCORE_FILENAME = "puntuaciones.txt";
 	private static final int SPEED = 85;
 	public static final int SNAKE_SIZE = 16;
 	public static final int SCREEN_SIZE = SNAKE_SIZE * 36;
