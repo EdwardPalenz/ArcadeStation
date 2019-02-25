@@ -29,8 +29,7 @@ public class LauncherApp extends Application {
 
 	@Override
 	public void init() throws Exception {
-		setUsoControl(new ControlDeUSo());
-		
+		usoControl=new ControlDeUSo();
 		controller = new LauncherController();
 		if (getUsoControl().isRecienCreado()) {
 			guardarUsos();
@@ -48,8 +47,8 @@ public class LauncherApp extends Application {
 		primaryStage.setTitle("Arcade Station v0.1");
 		Scene scene = new Scene(controller.getView());
 		primaryStage.setScene(scene);
-		scene.getStylesheets().add("styles/LauncherBaseStyle.css");
-		primaryStage.getIcons().add(new Image("assets/textures/launcherIcon.png"));
+		scene.getStylesheets().add("/styles/LauncherBaseStyle.css");
+		primaryStage.getIcons().add(new Image("/assets/textures/launcherIcon.png"));
 		primaryStage.show();
 
 	}
@@ -73,7 +72,6 @@ public class LauncherApp extends Application {
 		}
 		writer.close();
 	}
-
 	private void crearDirPuntuaciones() {
 		File dirMyGames = new File(
 				System.getProperty("user.home") + File.separator + "Documents" + File.separator + "My Games");

@@ -15,8 +15,8 @@ public class EndFactory implements EntityFactory {
 
 	@Spawns("End")
 	public Entity spawnPlayerBullet(SpawnData data) {
-		Image image=new Image("/games/spaceinvaders/main/resources/wall.png",600,600,true,true);
-		
+		Image image = new Image("/games/spaceinvaders/main/resources/wall.png", 600, 600, true, true);
+
 		return Entities.builder().from(data).type(SpritesTypes.END).viewFromNodeWithBBox(new Texture(image))
 				.with(new CollidableComponent(true)).build();
 	}

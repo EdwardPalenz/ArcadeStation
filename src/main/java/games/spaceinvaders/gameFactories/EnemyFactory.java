@@ -14,16 +14,12 @@ import games.spaceinvaders.spritesTypes.SpritesTypes;
 import javafx.scene.image.Image;
 
 public class EnemyFactory implements EntityFactory {
-	
-	
-	
+
 	@Spawns("Enemy")
 	public Entity spawnEnemy(SpawnData data) {
-		Image image=new Image("/games/spaceinvaders/main/resources/invaders.png");
+		Image image = new Image("/games/spaceinvaders/main/resources/invaders.png");
 		return Entities.builder().from(data).type(SpritesTypes.ENEMY).viewFromNodeWithBBox(new Texture(image))
 				.with(new CollidableComponent(true)).with(new EnemyControll()).with(new TimeComponent(2.0)).build();
 	}
-	
-	
 
 }

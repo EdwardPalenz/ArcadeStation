@@ -129,18 +129,18 @@ public class LauncherController implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void getJuegos() {
-		// Genera la lista de Juegos que utilizará el Launcher
+		// Genera la lista de Juegos que utilizara el Launcher
 		model.juegosProperty().addAll(SnakeClassic.class, SnakeEvolution.class, Furiout.class, AjedrezBeta.class,
 				SpaceInvaders.class, PongGame.class);
 
 		// Previews para los juegos
 		model.previewsProperty().addAll(
-				new Image("assets/textures/snakeClassicPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
-				new Image("assets/textures/snakePreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
-				new Image("assets/previews/furioutPreview.jpg", CENTER_WIDTH, CENTER_HEIGHT, true, true),
-				new Image("assets/textures/ajedrezPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
-				new Image("assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
-				new Image("assets/textures/pongPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true));
+				new Image("/assets/textures/snakeClassicPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("/assets/textures/snakePreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("/assets/previews/furioutPreview.jpg", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("/assets/textures/ajedrezPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("/assets/textures/spaceInvadersPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true),
+				new Image("/assets/textures/pongPreview.png", CENTER_WIDTH, CENTER_HEIGHT, true, true));
 	}
 
 	@Override
@@ -162,11 +162,11 @@ public class LauncherController implements Initializable {
 
 		anteriorButton.setOnAction(e -> anteriorImagen());
 
-		/* Menús */
+		/* Menï¿½s */
 		minimizarAlAbrirMenuItem.selectedProperty().bindBidirectional(model.minimizarProperty());
 
 		/*
-		 * Permite mover la ventana arrastrando la barra del menú superior
+		 * Permite mover la ventana arrastrando la barra del menï¿½ superior
 		 */
 		menuBar.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -321,7 +321,7 @@ public class LauncherController implements Initializable {
 
 		String className = game.getCanonicalName();
 
-		Alert cargando = new Alert(AlertType.INFORMATION, "El juego se está cargando...");
+		Alert cargando = new Alert(AlertType.INFORMATION, "El juego se estï¿½ cargando...");
 		cargando.setHeaderText("");
 		cargando.initOwner(LauncherApp.getPrimaryStage());
 		cargando.setGraphic(new ImageView(new Image("assets/textures/lancherLoading.gif")));
@@ -349,15 +349,15 @@ public class LauncherController implements Initializable {
 			alert.setContentText("Fallo");
 		});
 
-		abrirApp.setOnSucceeded(e -> {
-			HashMap<String, Integer> usoApps = LauncherApp.getUsoControl().getUsoApps();
-			try {
-				usoApps.replace(game.getSimpleName(), usoApps.get(game.getSimpleName()) + 1);
-			} catch (NullPointerException e2) {
-				usoApps.put(game.getSimpleName(), 1);
-			}
-			cargando.close();
-		});
+//		abrirApp.setOnSucceeded(e -> {
+//			HashMap<String, Integer> usoApps = LauncherApp.getUsoControl().getUsoApps();
+//			try {
+//				usoApps.replace(game.getSimpleName(), usoApps.get(game.getSimpleName()) + 1);
+//			} catch (NullPointerException e2) {
+//				usoApps.put(game.getSimpleName(), 1);
+//			}
+//			cargando.close();
+//		});
 
 		abrirApp.run();
 	}
@@ -380,11 +380,11 @@ public class LauncherController implements Initializable {
 		// Lista de estilos de la escena
 		ObservableList<String> stylesheets = view.getScene().getStylesheets();
 
-		// Si hay más de uno, borra el último. (Dejando siempre el default)
+		// Si hay mï¿½s de uno, borra el ï¿½ltimo. (Dejando siempre el default)
 		if (stylesheets.size() > 1)
 			stylesheets.remove(stylesheets.size() - 1);
 
-		// Si el seleccionado es el default no añadira un tema nuevo
+		// Si el seleccionado es el default no aï¿½adira un tema nuevo
 		String tema = nv.getUserData().toString();
 		if (!"default".equals(tema)) {
 			stylesheets.add(TEMAS_DIR + tema);

@@ -221,12 +221,10 @@ public class SpaceInvaders extends GameApplication {
 
 	private void gameOver() {
 		getAudioPlayer().stopMusic(music);
-		getDisplay().showConfirmationBox("Has perdido \n ¿Intentarlo otra vez?", yes -> {
+		getDisplay().showConfirmationBox("Has perdido \n Â¿Intentarlo otra vez?", yes -> {
 			if (yes) {
 				getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 				startNewGame();
-				
-
 
 			} else {
 				FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {
@@ -248,11 +246,10 @@ public class SpaceInvaders extends GameApplication {
 
 	private void victory() {
 		getAudioPlayer().stopMusic(music);
-		getDisplay().showConfirmationBox("Victoria\n ¿Volver a jugar?", yes -> {
+		getDisplay().showConfirmationBox("Victoria\n Â¿Volver a jugar?", yes -> {
 			if (yes) {
 				getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
-					startNewGame();
-				
+				startNewGame();
 
 			} else {
 				FXGL.getDisplay().showInputBox("Introduzca su nombre: ", nombre -> {

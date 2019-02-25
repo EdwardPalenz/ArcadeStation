@@ -157,8 +157,7 @@ public class Furiout extends GameApplication {
 			}
 			break;
 		default:
-			getDisplay().showConfirmationBox(
-					"¡Has terminado todos los niveles!. \n ¿Volver a jugar?", resp -> {
+			getDisplay().showConfirmationBox("Has completado todos los niveles \n Â¿Quiere volver a jugar?", resp -> {
 						if (resp) {
 							getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 							reset();
@@ -226,7 +225,7 @@ public class Furiout extends GameApplication {
 			protected void onCollisionBegin(Entity ball, Entity End) {
 				getAudioPlayer().stopMusic(music);
 				getAudioPlayer().playSound("gameover.wav");
-				getDisplay().showConfirmationBox("Fin de la partida.  \n ¿Try Again?",
+				getDisplay().showConfirmationBox("Fin de la partida.  \n Â¿Try Again?",
 						resp -> {
 							if (resp) {
 								getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);

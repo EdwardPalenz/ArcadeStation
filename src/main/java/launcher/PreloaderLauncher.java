@@ -35,8 +35,7 @@ public class PreloaderLauncher extends Preloader {
 		primaryStage.setWidth(300);
 		primaryStage.setHeight(300);
 		primaryStage.setScene(scene);
-		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		primaryStage.getIcons().add(new Image("assets/textures/launcherIcon.png"));
+		primaryStage.initStyle(StageStyle.UNDECORATED);
 		primaryStage.show();
 	}
 

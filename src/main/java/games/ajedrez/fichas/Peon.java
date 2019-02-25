@@ -12,16 +12,16 @@ public class Peon {
 
 	public static void selccionarPeon(Entity peon, GameWorld gameWorld) {
 
-//		Define el movimiento de un peon en función a su color
-		int dirección = 0;
+//		Define el movimiento de un peon en funciï¿½n a su color
+		int direccion = 0;
 		if (peon.getString("color").equals("blanca")) {
-			dirección = -1;
+			direccion = -1;
 		} else {
-			dirección = 1;
+			direccion = 1;
 		}
-		int movimiento = dirección * AjedrezBeta.TILE_SIZE;
+		int movimiento = direccion * AjedrezBeta.TILE_SIZE;
 
-//		Si está en su casilla de origen un peón se puede mover dos casillas, siempre y cuando no haya ningun enemigo en la
+//		Si estï¿½ en su casilla de origen un peï¿½n se puede mover dos casillas, siempre y cuando no haya ningun enemigo en la
 //		casilla correspondiente
 		;
 		if ((peon.getString("color").equals("blanca") && peon.getY() == 6 * AjedrezBeta.TILE_SIZE)
@@ -35,7 +35,7 @@ public class Peon {
 			}
 		}
 
-//		El movimiento estándar del peón es una casilla hacia delante, si no hay una ficha en esa casilla
+//		El movimiento estï¿½ndar del peï¿½n es una casilla hacia delante, si no hay una ficha en esa casilla
 		List<Entity> entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX(), peon.getY() + movimiento));
 		if (entitiesAt.size() < 1) {
 				Point2D position = new Point2D(peon.getX(), peon.getY() + movimiento);
@@ -43,7 +43,7 @@ public class Peon {
 			
 		}
 
-//		Si existe un enemigo en una casilla diagonal a la del peón en cuestión, este podra moverse ahí para matarlo
+//		Si existe un enemigo en una casilla diagonal a la del peï¿½n en cuestiï¿½n, este podra moverse ahï¿½ para matarlo
 		entitiesAt = gameWorld.getEntitiesAt(new Point2D(peon.getX() + AjedrezBeta.TILE_SIZE, peon.getY() + movimiento));
 		if (entitiesAt.size() > 0) {
 
