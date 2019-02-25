@@ -11,9 +11,9 @@ public class Puntuacion {
 
 	private IntegerProperty puntos;
 
-	public Puntuacion() {
-		nombre = new SimpleStringProperty(this, "nombre");
-		puntos = new SimpleIntegerProperty(this, "puntos");
+	public Puntuacion(String name, int points) {
+		nombre = new SimpleStringProperty(this, "nombre", name);
+		puntos = new SimpleIntegerProperty(this, "puntos", points);
 	}
 
 	public IntegerProperty puntosProperty() {

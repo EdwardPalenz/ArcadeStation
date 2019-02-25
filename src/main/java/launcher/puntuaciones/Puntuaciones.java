@@ -3,12 +3,14 @@ package launcher.puntuaciones;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.almasb.fxgl.app.GameApplication;
-
+import games.furiout.Furiout;
 import games.snakeClassic.SnakeClassic;
+import games.snakeevolution.SnakeEvolution;
+import games.spaceinvaders.spaceinvaders.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -75,10 +77,7 @@ public class Puntuaciones implements Initializable {
 	@FXML
 	private TableColumn<Puntuacion, Number> fOPuntos;
 
-	private List<Class<? extends GameApplication>> juegos;
-
-	public Puntuaciones(List<Class<? extends GameApplication>> juegos) throws IOException {
-		this.juegos = juegos;
+	public Puntuaciones() throws IOException {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PuntuacionesView.fxml"));
 		loader.setController(this);
@@ -109,19 +108,63 @@ public class Puntuaciones implements Initializable {
 	}
 
 	private void cargarPuntuaciones() {
-		// Snake Classic
-		String path = LauncherApp.APP_SCORE_DIR + SnakeClassic.class.getSimpleName();
-		File ficheroPuntutacion = new File(path);
 
-		if (ficheroPuntutacion.exists()) {
-			prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), snakeClassicTable);
+		try {
+			// Snake Classic
+			String path = LauncherApp.APP_SCORE_DIR + File.separator + SnakeClassic.class.getSimpleName();
+			File ficheroPuntutacion = new File(path);
+
+			if (ficheroPuntutacion.exists()) {
+				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), snakeClassicTable, sCPuntos);
+			}
+			// Snake Evolution
+			path = LauncherApp.APP_SCORE_DIR + File.separator + SnakeEvolution.class.getSimpleName();
+			ficheroPuntutacion = new File(path);
+
+			if (ficheroPuntutacion.exists()) {
+				System.out.println("?");
+				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), snakeEvolutionTable,
+						sEPuntos);
+			}
+
+			// Space Invaders
+			path = LauncherApp.APP_SCORE_DIR + File.separator + SpaceInvaders.class.getSimpleName();
+			ficheroPuntutacion = new File(path);
+
+			if (ficheroPuntutacion.exists()) {
+				System.out.println("?");
+				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), spaceInvadersTable,
+						sIPuntos);
+			}
+
+			// FuriOut
+			path = LauncherApp.APP_SCORE_DIR + File.separator + Furiout.class.getSimpleName();
+			ficheroPuntutacion = new File(path);
+
+			if (ficheroPuntutacion.exists()) {
+				System.out.println("?");
+				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), furiOutTable, fOPuntos);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
 	}
 
-	private void prepararPuntuaciones(File file, TableView<Puntuacion> snakeClassicTable2) {
-		// TODO Auto-generated method stub
-		
+	private void prepararPuntuaciones(File file, TableView<Puntuacion> tabla, TableColumn<Puntuacion, Number> column)
+			throws IOException {
+
+		List<String> puntuaciones = Files.readAllLines(file.toPath());
+
+		for (String puntuacion : puntuaciones) {
+			String[] punt = puntuacion.split(":");
+			tabla.getItems().add(new Puntuacion(punt[0], Integer.parseInt(punt[1])));
+
+		}
+		tabla.getSortOrder().add(column);
+		tabla.getSortOrder().add(column);
+		column.setSortType(TableColumn.SortType.DESCENDING);
+
 	}
 
 	public AnchorPane getView() {

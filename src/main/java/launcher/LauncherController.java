@@ -390,17 +390,17 @@ public class LauncherController implements Initializable {
 	@FXML
 	void onPuntuacionesAction(ActionEvent event) {
 		try {
-			Puntuaciones puntuaciones = new Puntuaciones(model.getJuegos());
+			Puntuaciones puntuaciones = new Puntuaciones();
 
 			Stage puntuacionesStage = new Stage();
 			puntuacionesStage.setTitle("Puntuaciones");
 			puntuacionesStage.initOwner(LauncherApp.getPrimaryStage());
 			puntuacionesStage.setScene(new Scene(puntuaciones.getView()));
-			puntuacionesStage.getScene().getStylesheets()
-					.addAll(LauncherApp.getPrimaryStage().getScene().getStylesheets());
+//			puntuacionesStage.getScene().getStylesheets()
+//					.addAll(LauncherApp.getPrimaryStage().getScene().getStylesheets());
 
 			puntuacionesStage.getIcons().addAll(LauncherApp.getPrimaryStage().getIcons());
-			
+
 			puntuacionesStage.show();
 
 		} catch (IOException e) {
