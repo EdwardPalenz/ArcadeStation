@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -107,7 +108,7 @@ public class Puntuaciones implements Initializable {
 
 	}
 
-	private void cargarPuntuaciones() {
+	public  void cargarPuntuaciones() {
 
 		try {
 			// Snake Classic
@@ -145,10 +146,22 @@ public class Puntuaciones implements Initializable {
 				System.out.println("?");
 				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), furiOutTable, fOPuntos);
 			}
+		
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public ArrayList<Puntuacion> listaInforme(){
+		ArrayList<Puntuacion> puntos = new ArrayList<>();
+		puntos.addAll(snakeClassicTable.getItems());
+		puntos.addAll(snakeEvolutionTable.getItems());
+		puntos.addAll(furiOutTable.getItems());
+		puntos.addAll(spaceInvadersTable.getItems());
+		
+		return puntos;
 	}
 
 	private void prepararPuntuaciones(File file, TableView<Puntuacion> tabla, TableColumn<Puntuacion, Number> column)

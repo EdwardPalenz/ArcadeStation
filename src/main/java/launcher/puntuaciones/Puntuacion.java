@@ -7,9 +7,9 @@ import javafx.beans.property.StringProperty;
 
 public class Puntuacion {
 
-	private StringProperty nombre;
+	public StringProperty nombre;
 
-	private IntegerProperty puntos;
+	public IntegerProperty puntos;
 
 	public Puntuacion(String name, int points) {
 		nombre = new SimpleStringProperty(this, "nombre", name);

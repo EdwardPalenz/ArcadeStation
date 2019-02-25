@@ -13,7 +13,6 @@ public class ControlDeUSo {
 
 	private HashMap<String, Integer> usoApps;
 	private File ficheroUso;
-	//private File ficheroInforme;
 	private List<String> usos = new ArrayList<>();
 	private boolean recienCreado = false;
 	
