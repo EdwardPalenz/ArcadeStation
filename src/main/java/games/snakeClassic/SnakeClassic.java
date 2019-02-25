@@ -282,7 +282,7 @@ public class SnakeClassic extends GameApplication {
 //				.with("color", color)
 //				.viewFromNodeWithBBox(new Rectangle(SNAKE_SIZE, SNAKE_SIZE, color))
 				.viewFromNodeWithBBox(
-						new ImageView(new Image("/games/snakeClassic/comida.png", SNAKE_SIZE, SNAKE_SIZE, true, true)))
+						new ImageView(new Image("/assets/textures/comida.png", SNAKE_SIZE, SNAKE_SIZE, true, true)))
 				.renderLayer(RenderLayer.BOTTOM).buildAndAttach();
 	}
 
@@ -391,7 +391,7 @@ public class SnakeClassic extends GameApplication {
 		System.out.println(x + " " + y);
 		Entity snakePart = Entities.builder().at(new Point2D(x, y)).with("direccion", dir)
 				.viewFromNodeWithBBox(new ImageView(
-						new Image("/games/snakeClassic/snakeClassic.png", SNAKE_SIZE, SNAKE_SIZE, false, false)))
+						new Image("/assets/textures/snakeClassic.png", SNAKE_SIZE, SNAKE_SIZE, false, false)))
 				.buildAndAttach();
 		serpiente.add(snakePart);
 	}
