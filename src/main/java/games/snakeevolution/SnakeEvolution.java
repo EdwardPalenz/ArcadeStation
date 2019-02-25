@@ -426,7 +426,7 @@ public class SnakeEvolution extends GameApplication {
 		getMasterTimer().runOnceAfter(new Runnable() {
 			@Override
 			public void run() {
-				getDisplay().showConfirmationBox("Fin del juego\n¿Volver a empezar?", resp -> {
+				getDisplay().showConfirmationBox("Fin del juego\n Â¿Volver a empezar?", resp -> {
 					if (resp) {
 						getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 						resetear();

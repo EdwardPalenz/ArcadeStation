@@ -12,10 +12,11 @@ import games.spaceinvaders.spritesTypes.SpritesTypes;
 import javafx.scene.image.Image;
 
 public class BackgroundFactory implements EntityFactory {
-	
+
 	@Spawns("Background")
 	public Entity spawnEnemyBullet(SpawnData data) {
-		Image image=new Image("/games/spaceinvaders/main/resources/bg.png");
-		return Entities.builder().from(data).type(SpritesTypes.BACKGROUND).viewFromNode(new Texture(image)).renderLayer(RenderLayer.BACKGROUND).build();
+		Image image = new Image("/games/spaceinvaders/main/resources/bg.png");
+		return Entities.builder().from(data).type(SpritesTypes.BACKGROUND).viewFromNode(new Texture(image))
+				.renderLayer(RenderLayer.BACKGROUND).build();
 	}
 }

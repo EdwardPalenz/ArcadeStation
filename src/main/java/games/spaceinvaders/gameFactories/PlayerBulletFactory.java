@@ -14,16 +14,15 @@ import games.spaceinvaders.spritesTypes.SpritesTypes;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
-
 public class PlayerBulletFactory implements EntityFactory {
-	
+
 	@Spawns("PlayerBullet")
 	public Entity spawnPlayerBullet(SpawnData data) {
-		
-		 
-		Image image=new Image("/games/spaceinvaders/main/resources/disparopplayer.png");
+
+		Image image = new Image("/games/spaceinvaders/main/resources/disparopplayer.png");
 		return Entities.builder().from(data).type(SpritesTypes.PLAYER_BULLET).viewFromNodeWithBBox(new Texture(image))
-				.with(new CollidableComponent(true)).with(new ProjectileComponent(new Point2D(0, -1), 100)).with(new BulletControl()).build();
+				.with(new CollidableComponent(true)).with(new ProjectileComponent(new Point2D(0, -1), 100))
+				.with(new BulletControl()).build();
 	}
 
 }

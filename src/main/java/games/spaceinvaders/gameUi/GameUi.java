@@ -62,7 +62,7 @@ public class GameUi implements UIController {
 		scoreLabel.setLayoutY(cordinateY - 10);
 		scoreLabel.setPrefSize(100, 100);
 		scoreLabel.setTextFill(Color.WHITE);
-		scoreLabel.textProperty().bind(Bindings.concat("Puntuación\n").concat(scoreModel.scoreProperty()));
+		scoreLabel.textProperty().bind(Bindings.concat("Puntuacion\n").concat(scoreModel.scoreProperty()));
 		gameScene.addUINode(scoreLabel);
 	}
 

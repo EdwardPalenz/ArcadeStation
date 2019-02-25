@@ -13,17 +13,13 @@ import games.spaceinvaders.spritesTypes.SpritesTypes;
 import javafx.scene.image.Image;
 
 public class WallFactory implements EntityFactory {
-	
-	
-	
+
 	@Spawns("Wall")
 	public Entity spawnPlayerBullet(SpawnData data) {
-		Image image=new Image("/games/spaceinvaders/main/resources/wall.png",50,50,true,true);
-		
+		Image image = new Image("/games/spaceinvaders/main/resources/wall.png", 50, 50, true, true);
+
 		return Entities.builder().from(data).type(SpritesTypes.WALL).viewFromNodeWithBBox(new Texture(image))
 				.with(new CollidableComponent(true)).with(new WallControll(7)).build();
 	}
-	
-	
 
 }
