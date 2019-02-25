@@ -3,7 +3,9 @@ package launcher;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.almasb.fxgl.app.GameApplication;
@@ -31,6 +33,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -38,6 +41,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -409,8 +413,31 @@ public class LauncherController implements Initializable {
 	}
 
 	@FXML
-	void onReglasAction(ActionEvent event) {
-
+	void onReglasAction(ActionEvent event) throws IOException {
+		
+		TextArea reglas = new TextArea();
+		reglas.setEditable(false);
+		reglas.setMinSize(CENTER_WIDTH, CENTER_HEIGHT);
+		reglas.setWrapText(true);
+		
+		String pathname = "src/main/resources/reglas/" + model.getJuegos().get(model.getJuegoSeleccionado()).getSimpleName() + ".txt";
+		File file = new File(pathname);
+		
+		if (file.exists()) {
+			List<String> reglasList = Files.readAllLines(file.toPath());
+			for(int i = 0; i < reglasList.size(); i++) {
+				reglas.setText(reglas.getText() + reglasList.get(i) + "\n");
+			}
+		}
+		
+		Pane root = new Pane();
+		root.getChildren().add(reglas);
+		
+		Stage stage = new Stage();
+		stage.getIcons().addAll(LauncherApp.getPrimaryStage().getIcons());
+		stage.setScene(new Scene(root, CENTER_WIDTH, CENTER_HEIGHT));
+		stage.setTitle("Reglas");
+		stage.show();
 	}
 
 	@FXML

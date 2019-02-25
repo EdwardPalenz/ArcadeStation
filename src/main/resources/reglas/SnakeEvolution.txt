@@ -1,6 +1,6 @@
 Reglas del Snake
 
-Objetivo: Comer todas las manzanas que puedas evitando diversos obstáculos sin chocar con su cuerpo
+Objetivo: Comer todas las manzanas que puedas evitando diversos obstaculos sin chocar con su cuerpo
 Bonus: Hay manzanas azules que en vez de agrandar la serpiente, la reducen, facilitando no chocar con tu cola
 
 Controles:
