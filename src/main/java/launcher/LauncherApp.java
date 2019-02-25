@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.launcher.uso.ControlDeUSo;
+import main.launcher.uso.TransformadorXml;
 
 public class LauncherApp extends Application {
 
@@ -21,13 +22,15 @@ public class LauncherApp extends Application {
 	private static Stage primaryStage;
 
 	private LauncherController controller;
+	
+	private TransformadorXml trasnXml=new TransformadorXml();
 
 	private static ControlDeUSo usoControl;
 
 	@Override
 	public void init() throws Exception {
 		setUsoControl(new ControlDeUSo());
-
+		
 		controller = new LauncherController();
 		if (getUsoControl().isRecienCreado()) {
 			guardarUsos();
@@ -54,6 +57,8 @@ public class LauncherApp extends Application {
 	@Override
 	public void stop() throws Exception {
 		guardarUsos();
+		trasnXml.begin();
+		
 	}
 
 	private void guardarUsos() throws FileNotFoundException {
@@ -63,7 +68,7 @@ public class LauncherApp extends Application {
 		for (int i = 0; i < juegos.size(); i++) {
 
 			String nombreJuego = juegos.get(i).getSimpleName();
-			writer.write(nombreJuego + ":" + getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0) + "\n");
+			writer.write( getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0) + "\n");
 
 		}
 		writer.close();

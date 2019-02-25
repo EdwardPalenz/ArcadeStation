@@ -7,15 +7,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 public class ControlDeUSo {
 
 	private HashMap<String, Integer> usoApps;
 	private File ficheroUso;
+	//private File ficheroInforme;
 	private List<String> usos = new ArrayList<>();
 	private boolean recienCreado = false;
+	
 
 	public ControlDeUSo() throws IOException {
 		ficheroUso = new File("src/main/resources/uso/UsoApps.txt");
+		
 
 		usoApps = new HashMap<>();
 
@@ -28,9 +33,10 @@ public class ControlDeUSo {
 	}
 
 	public void leerFicheroUsos() throws IOException {
-
+		
 		usos = Files.readAllLines(ficheroUso.toPath());
-
+	
+		
 		generarHashMap();
 
 	}
@@ -62,5 +68,11 @@ public class ControlDeUSo {
 	public void setRecienCreado(boolean recienCreado) {
 		this.recienCreado = recienCreado;
 	}
+
+	
+
+	
+	
+	
 
 }
