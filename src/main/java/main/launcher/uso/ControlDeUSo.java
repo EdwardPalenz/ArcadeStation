@@ -21,6 +21,7 @@ public class ControlDeUSo {
 
 		if (!ficheroUso.exists()) {
 			ficheroUso.createNewFile();
+			
 			setRecienCreado(true);
 		} else {
 			leerFicheroUsos();

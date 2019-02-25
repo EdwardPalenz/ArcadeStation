@@ -22,17 +22,17 @@ public class LauncherApp extends Application {
 
 	private LauncherController controller;
 
-	private static ControlDeUSo usoControl;
+	//private static ControlDeUSo usoControl;
 
 	@Override
 	public void init() throws Exception {
-		setUsoControl(new ControlDeUSo());
+		//setUsoControl(new ControlDeUSo());
 
 		controller = new LauncherController();
-		if (getUsoControl().isRecienCreado()) {
-			guardarUsos();
-			getUsoControl().leerFicheroUsos();
-		}
+//		if (getUsoControl().isRecienCreado()) {
+//			guardarUsos();
+//			getUsoControl().leerFicheroUsos();
+//		}
 	}
 
 	@Override
@@ -45,29 +45,29 @@ public class LauncherApp extends Application {
 		primaryStage.setTitle("Arcade Station v0.1");
 		Scene scene = new Scene(controller.getView());
 		primaryStage.setScene(scene);
-		scene.getStylesheets().add("styles/LauncherBaseStyle.css");
-		primaryStage.getIcons().add(new Image("assets/textures/launcherIcon.png"));
+		scene.getStylesheets().add("/styles/LauncherBaseStyle.css");
+		primaryStage.getIcons().add(new Image("/assets/textures/launcherIcon.png"));
 		primaryStage.show();
 
 	}
 
-	@Override
-	public void stop() throws Exception {
-		guardarUsos();
-	}
+//	@Override
+//	public void stop() throws Exception {
+//		guardarUsos();
+//	}
 
-	private void guardarUsos() throws FileNotFoundException {
-		List<Class<? extends GameApplication>> juegos = controller.getModel().getJuegos();
-
-		PrintWriter writer = new PrintWriter(getUsoControl().getFicheroUso());
-		for (int i = 0; i < juegos.size(); i++) {
-
-			String nombreJuego = juegos.get(i).getSimpleName();
-			writer.write(nombreJuego + ":" + getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0) + "\n");
-
-		}
-		writer.close();
-	}
+//	private void guardarUsos() throws FileNotFoundException {
+//		List<Class<? extends GameApplication>> juegos = controller.getModel().getJuegos();
+//
+//		PrintWriter writer = new PrintWriter(getUsoControl().getFicheroUso());
+//		for (int i = 0; i < juegos.size(); i++) {
+//
+//			String nombreJuego = juegos.get(i).getSimpleName();
+//			writer.write(nombreJuego + ":" + getUsoControl().getUsoApps().getOrDefault(nombreJuego, 0) + "\n");
+//
+//		}
+//		writer.close();
+//	}
 
 	private void crearDirPuntuaciones() {
 		File dirMyGames = new File(
@@ -96,12 +96,12 @@ public class LauncherApp extends Application {
 		LauncherApp.primaryStage = primaryStage;
 	}
 
-	public static ControlDeUSo getUsoControl() {
-		return usoControl;
-	}
-
-	public static void setUsoControl(ControlDeUSo usoControl) {
-		LauncherApp.usoControl = usoControl;
-	}
+//	public static ControlDeUSo getUsoControl() {
+//		return usoControl;
+//	}
+//
+//	public static void setUsoControl(ControlDeUSo usoControl) {
+//		LauncherApp.usoControl = usoControl;
+//	}
 
 }

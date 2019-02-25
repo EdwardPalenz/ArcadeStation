@@ -94,11 +94,11 @@ public class Rey {
 		Entity rey = null;
 
 		@SuppressWarnings("unused")
-		int dirección = 0;
+		int direccion = 0;
 		if (color.equals("blanca")) {
-			dirección = -1;
+			direccion = -1;
 		} else {
-			dirección = 1;
+			direccion = 1;
 		}
 
 		List<Entity> lista = gameWorld.getEntities();
@@ -111,15 +111,15 @@ public class Rey {
 		}
 
 //		Comprobar vertical ^
-//		Primero comprobará la casilla inmediatamene arriba, si es un rey, reina o una torre se considera que esta en peligro
-//		en las casillas mas arriba solo lo considerará si es una reina o una torre y no hay un aliado bloqueando el camino
+//		Primero comprobarï¿½ la casilla inmediatamene arriba, si es un rey, reina o una torre se considera que esta en peligro
+//		en las casillas mas arriba solo lo considerarï¿½ si es una reina o una torre y no hay un aliado bloqueando el camino
 		boolean arrSegura = false;
 		Point2D pos = rey.getPosition().add(0, -AjedrezBeta.TILE_SIZE);
 		List<Entity> entitiesAt = gameWorld.getEntitiesAt(pos);
 
 		if (entitiesAt.size() > 0) {
 			for (int i = 0; i < entitiesAt.size() && (!arrSegura || !peligro); i++) {
-//				Si encima hay un aliado no está en peligro en esa posición
+//				Si encima hay un aliado no estï¿½ en peligro en esa posiciï¿½n
 				if (comprobarAliado(rey, entitiesAt, i)) {
 					arrSegura = true;
 					peligro = false;
@@ -144,7 +144,7 @@ public class Rey {
 
 		if (entitiesAt.size() > 0) {
 			for (int i = 0; i < entitiesAt.size() && (!abajoSegura || !peligro); i++) {
-//				Si encima hay un aliado no está en peligro en esa posición
+//				Si encima hay un aliado no estï¿½ en peligro en esa posiciï¿½n
 				if (comprobarAliado(rey, entitiesAt, i)) {
 					abajoSegura = true;
 					peligro = false;
@@ -169,7 +169,7 @@ public class Rey {
 
 		if (entitiesAt.size() > 0) {
 			for (int i = 0; i < entitiesAt.size() && (!derechaSegura || !peligro); i++) {
-//				Si encima hay un aliado no está en peligro en esa posición
+//				Si encima hay un aliado no estï¿½ en peligro en esa posiciï¿½n
 				if (comprobarAliado(rey, entitiesAt, i)) {
 					derechaSegura = true;
 					peligro = false;
@@ -195,7 +195,7 @@ public class Rey {
 				if (entitiesAt.size() > 0) {
 
 					for (int i = 0; i < entitiesAt.size() && (!IzquierdaSegura || !peligro); i++) {
-//					Si encima hay un aliado no está en peligro en esa posición
+//					Si encima hay un aliado no estï¿½ en peligro en esa posiciï¿½n
 						if (comprobarAliado(rey, entitiesAt, i)) {
 							IzquierdaSegura = true;
 							peligro = false;
