@@ -76,6 +76,7 @@ Juego donde controlas un "bat" y tu objetivo es destruir todos los bloques que a
 
 - Creador del Pong, Snake Classic y Ajedrez
 - Creador del Arcade Station Launcher
+- Verdadero Administrador del GitHub
 
 #### Marcos Fariña Bravo
 
@@ -90,4 +91,4 @@ Juego donde controlas un "bat" y tu objetivo es destruir todos los bloques que a
 #### Eduardo Palenzuela Torres
 
 * Creador del FuriOut
-* Administrador del GitHub
+* Host y creador del GitHub
