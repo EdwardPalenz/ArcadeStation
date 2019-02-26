@@ -137,7 +137,7 @@ public class SpaceInvaders extends GameApplication {
 			protected void onCollisionBegin(Entity bullet, Entity enemy) {
 				bullet.removeFromWorld();
 				DSLKt.spawn("ParticleExplosion", enemy.getCenter());
-				DSLKt.play("Explosion.wav");
+				DSLKt.play("ExplosionSI.wav");
 				enemy.removeFromWorld();
 				gameUi.addPoints();
 				numEnemies--;
@@ -212,7 +212,7 @@ public class SpaceInvaders extends GameApplication {
 			protected void onCollisionBegin(Entity enemy, Entity wall) {
 				wall.removeFromWorld();
 				DSLKt.spawn("ParticleExplosion", enemy.getCenter());
-				DSLKt.play("Explosion.wav");
+				DSLKt.play("ExplosionSI.wav");
 				enemy.removeFromWorld();
 			}
 		});
