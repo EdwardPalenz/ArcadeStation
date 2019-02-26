@@ -73,10 +73,10 @@ public class LauncherApp extends Application {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, informe);
 		JasperViewer.viewReport(jasperPrint, false);
 
-//		JRExporter exporter = new JRPdfExporter();
-//		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-//		exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("/reports/reporte.pdf"));
-//		exporter.exportReport(); 
+		JRExporter exporter = new JRPdfExporter();
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reporte.pdf"));
+		exporter.exportReport(); 
 		
 	}
 

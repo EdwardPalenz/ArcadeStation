@@ -8,10 +8,11 @@ import javafx.beans.property.StringProperty;
 public class Puntuacion {
 
 	public StringProperty nombre;
-
+	public StringProperty juego;
 	public IntegerProperty puntos;
 
-	public Puntuacion(String name, int points) {
+	public Puntuacion(String name, int points, String game) {
+		juego = new SimpleStringProperty(this, "juego", game);
 		nombre = new SimpleStringProperty(this, "nombre", name);
 		puntos = new SimpleIntegerProperty(this, "puntos", points);
 	}
@@ -39,4 +40,19 @@ public class Puntuacion {
 	public void setNombre(String nombre) {
 		nombreProperty().set(nombre);
 	}
+
+	public StringProperty juegoProperty() {
+		return this.juego;
+	}
+	
+
+	public String getJuego() {
+		return this.juegoProperty().get();
+	}
+	
+
+	public void setJuego(final String juego) {
+		this.juegoProperty().set(juego);
+	}
+	
 }

@@ -127,7 +127,7 @@ public class Puntuaciones implements Initializable {
 			File ficheroPuntutacion = new File(path);
 
 			if (ficheroPuntutacion.exists()) {
-				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), snakeClassicTable, sCPuntos);
+				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), snakeClassicTable, sCPuntos,"Snake Classic");
 			}
 			// Snake Evolution
 			path = LauncherApp.APP_SCORE_DIR + File.separator + SnakeEvolution.class.getSimpleName();
@@ -136,7 +136,7 @@ public class Puntuaciones implements Initializable {
 			if (ficheroPuntutacion.exists()) {
 				System.out.println("?");
 				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), snakeEvolutionTable,
-						sEPuntos);
+						sEPuntos, "Snake Evolution");
 			}
 
 			// Space Invaders
@@ -146,7 +146,7 @@ public class Puntuaciones implements Initializable {
 			if (ficheroPuntutacion.exists()) {
 				System.out.println("?");
 				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), spaceInvadersTable,
-						sIPuntos);
+						sIPuntos, "Space Invaders");
 			}
 
 			// FuriOut
@@ -155,7 +155,7 @@ public class Puntuaciones implements Initializable {
 
 			if (ficheroPuntutacion.exists()) {
 				System.out.println("?");
-				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), furiOutTable, fOPuntos);
+				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), furiOutTable, fOPuntos, "FuriOut");
 			}
 
 		} catch (IOException e) {
@@ -176,14 +176,14 @@ public class Puntuaciones implements Initializable {
 		return puntos;
 	}
 
-	private void prepararPuntuaciones(File file, TableView<Puntuacion> tabla, TableColumn<Puntuacion, Number> column)
+	private void prepararPuntuaciones(File file, TableView<Puntuacion> tabla, TableColumn<Puntuacion, Number> column, String juego)
 			throws IOException {
 
 		List<String> puntuaciones = Files.readAllLines(file.toPath());
 
 		for (String puntuacion : puntuaciones) {
 			String[] punt = puntuacion.split(":");
-			tabla.getItems().add(new Puntuacion(punt[0], Integer.parseInt(punt[1])));
+			tabla.getItems().add(new Puntuacion(punt[0], Integer.parseInt(punt[1]),juego));
 
 		}
 		tabla.getSortOrder().add(column);

@@ -16,6 +16,7 @@ public class InformeFactory implements JRDataSource {
 
 	public ArrayList<Puntuacion> load() throws Exception {
 		puntuaciones = new Puntuaciones();
+		//puntuaciones.cargarPuntuaciones();
 		puntos = new ArrayList<>();
 		puntos.addAll(puntuaciones.listaInforme());
 		return puntos;
@@ -33,6 +34,8 @@ public class InformeFactory implements JRDataSource {
 			valor = puntos.get(indice).getNombre();
 		} else if ("puntos".equals(jrField.getName())) {
 			valor = puntos.get(indice).getPuntos();
+		} else if ("juego".equals(jrField.getName())){
+			valor = puntos.get(indice).getJuego();
 		}
 		return valor;
 	}
