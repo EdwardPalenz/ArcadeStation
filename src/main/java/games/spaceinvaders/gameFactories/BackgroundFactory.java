@@ -1,5 +1,6 @@
 package games.spaceinvaders.gameFactories;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -15,8 +16,8 @@ public class BackgroundFactory implements EntityFactory {
 
 	@Spawns("Background")
 	public Entity spawnEnemyBullet(SpawnData data) {
-		Image image = new Image("/games/spaceinvaders/main/resources/bg.png");
-		return Entities.builder().from(data).type(SpritesTypes.BACKGROUND).viewFromNode(new Texture(image))
+//		Image image = new Image("/games/spaceinvaders/main/resources/bg.png");
+		return Entities.builder().from(data).type(SpritesTypes.BACKGROUND).viewFromNode(FXGL.getAssetLoader().loadTexture("bg.png"))
 				.renderLayer(RenderLayer.BACKGROUND).build();
 	}
 }

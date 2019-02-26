@@ -1,5 +1,6 @@
 package games.spaceinvaders.gameFactories;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -16,9 +17,9 @@ public class WallFactory implements EntityFactory {
 
 	@Spawns("Wall")
 	public Entity spawnPlayerBullet(SpawnData data) {
-		Image image = new Image("/games/spaceinvaders/main/resources/wall.png", 50, 50, true, true);
+//		Image image = new Image("/games/spaceinvaders/main/resources/wall.png", 50, 50, true, true);
 
-		return Entities.builder().from(data).type(SpritesTypes.WALL).viewFromNodeWithBBox(new Texture(image))
+		return Entities.builder().from(data).type(SpritesTypes.WALL).viewFromNodeWithBBox(FXGL.getAssetLoader().loadTexture("wall.png", 50, 20))
 				.with(new CollidableComponent(true)).with(new WallControll(7)).build();
 	}
 

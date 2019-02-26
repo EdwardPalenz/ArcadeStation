@@ -1,5 +1,6 @@
 package games.spaceinvaders.gameFactories;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -18,8 +19,8 @@ public class PlayerFactory implements EntityFactory {
 	@Spawns("Player")
 	public Entity spawnPLayer(SpawnData data) {
 
-		Image image = new Image("/games/spaceinvaders/main/resources/player.png");
-		return Entities.builder().from(data).type(SpritesTypes.PLAYER).viewFromNodeWithBBox(new Texture(image))
+//		Image image = new Image("/games/spaceinvaders/main/resources/player.png");
+		return Entities.builder().from(data).type(SpritesTypes.PLAYER).viewFromNodeWithBBox(FXGL.getAssetLoader().loadTexture("player.png"))
 				.with(new CollidableComponent(true)).with(new PlayerControll()).with(new TimeComponent(1.0)).build();
 	}
 

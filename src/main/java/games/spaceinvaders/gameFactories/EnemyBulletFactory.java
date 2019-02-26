@@ -1,5 +1,6 @@
 package games.spaceinvaders.gameFactories;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -17,8 +18,8 @@ import javafx.scene.image.Image;
 public class EnemyBulletFactory implements EntityFactory {
 	@Spawns("EnemyBullet")
 	public Entity spawnEnemyBullet(SpawnData data) {
-		Image image = new Image("/games/spaceinvaders/main/resources/disparopplayer.png");
-		return Entities.builder().from(data).type(SpritesTypes.ENEMY_BULLET).viewFromNodeWithBBox(new Texture(image))
+//		Image image = new Image("/games/spaceinvaders/main/resources/disparopplayer.png");
+		return Entities.builder().from(data).type(SpritesTypes.ENEMY_BULLET).viewFromNodeWithBBox(FXGL.getAssetLoader().loadTexture("disparopplayer.png"))
 				.with(new CollidableComponent(true)).with(new ProjectileComponent(new Point2D(0, -1), -100))
 				.with(new BulletControl()).build();
 	}

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.almasb.fxgl.app.FXGL;
 import com.almasb.fxgl.scene.GameScene;
 import com.almasb.fxgl.texture.Texture;
 import com.almasb.fxgl.ui.UIController;
@@ -45,8 +46,8 @@ public class GameUi implements UIController {
 
 	public void addLife() {
 		int numLives = lives.size();
-		Image image = new Image("/assets/textures/main/resources/like.png");
-		Texture texture = new Texture(image);
+//		Image image = new Image("/games/spaceinvaders/main/resources/like.png");
+		Texture texture = FXGL.getAssetLoader().loadTexture("like.png");
 
 		texture.setTranslateX(20 * numLives + 540);
 		texture.setTranslateY(cordinateY);

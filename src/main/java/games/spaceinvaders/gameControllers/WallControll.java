@@ -39,8 +39,8 @@ public class WallControll extends Component {
 	}
 
 	public void changeImage() {
-		Image image1 = new Image("/games/spaceinvaders/main/resources/wall2.png", 50, 50, true, true);
-		entity.setViewWithBBox(new Texture(image1));
+//		Image image1 = new Image("/games/spaceinvaders/main/resources/wall2.png", 50, 50, true, true);
+		entity.setViewWithBBox(FXGL.getAssetLoader().loadTexture("wall2.png", 50, 20));
 	}
 
 }
