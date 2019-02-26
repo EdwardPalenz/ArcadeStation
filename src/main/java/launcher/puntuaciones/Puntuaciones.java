@@ -21,6 +21,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import launcher.LauncherApp;
+import main.launcher.uso.InformeFactory;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 public class Puntuaciones implements Initializable {
 
@@ -78,6 +87,8 @@ public class Puntuaciones implements Initializable {
 	@FXML
 	private TableColumn<Puntuacion, Number> fOPuntos;
 
+	private InformeFactory informe;
+
 	public Puntuaciones() throws IOException {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PuntuacionesView.fxml"));
@@ -108,7 +119,7 @@ public class Puntuaciones implements Initializable {
 
 	}
 
-	public  void cargarPuntuaciones() {
+	public void cargarPuntuaciones() {
 
 		try {
 			// Snake Classic
@@ -146,21 +157,22 @@ public class Puntuaciones implements Initializable {
 				System.out.println("?");
 				prepararPuntuaciones(new File(path + File.separator + "puntuaciones.txt"), furiOutTable, fOPuntos);
 			}
-		
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public ArrayList<Puntuacion> listaInforme(){
+
+	public ArrayList<Puntuacion> listaInforme() throws JRException {
+		
 		ArrayList<Puntuacion> puntos = new ArrayList<>();
 		puntos.addAll(snakeClassicTable.getItems());
 		puntos.addAll(snakeEvolutionTable.getItems());
 		puntos.addAll(furiOutTable.getItems());
 		puntos.addAll(spaceInvadersTable.getItems());
-		
+
+
 		return puntos;
 	}
 
