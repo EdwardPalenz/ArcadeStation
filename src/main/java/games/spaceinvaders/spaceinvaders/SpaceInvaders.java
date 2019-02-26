@@ -41,7 +41,7 @@ public class SpaceInvaders extends GameApplication {
 
 	@Override
 	protected void initSettings(GameSettings settings) {
-		settings.setTitle("Sapce Invaders");
+		settings.setTitle("Space Invaders");
 		settings.setVersion("0.0.1");
 		settings.setWidth(600);
 		settings.setHeight(800);

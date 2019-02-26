@@ -1,12 +1,7 @@
 package launcher;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.List;
-
-import com.almasb.fxgl.app.GameApplication;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,8 +9,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.launcher.uso.InformeFactory;
-import main.launcher.uso.TransformadorXml;
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -23,8 +16,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 public class LauncherApp extends Application {
 
@@ -33,11 +24,8 @@ public class LauncherApp extends Application {
 	private static Stage primaryStage;
 
 	private LauncherController controller;
-	
-	private static InformeFactory informe;
-	
-	private TransformadorXml trasnXml=new TransformadorXml();
 
+	private static InformeFactory informe;
 
 	@Override
 	public void init() throws Exception {
@@ -62,22 +50,21 @@ public class LauncherApp extends Application {
 
 	@Override
 	public void stop() throws Exception {
-		trasnXml.begin();
 
 		informe = new InformeFactory();
 		informe.load();
-		
+
 		InputStream is = this.getClass().getResourceAsStream("/reports/Informe3.jrxml");
 		JasperReport reporte = JasperCompileManager.compileReport(is);
-		
+
 		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, informe);
 //		JasperViewer.viewReport(jasperPrint, false);
 
 		JRExporter exporter = new JRPdfExporter();
 		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 		exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reporte.pdf"));
-		exporter.exportReport(); 
-		
+		exporter.exportReport();
+
 	}
 
 	private void crearDirPuntuaciones() {

@@ -1,7 +1,14 @@
 package launcher;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -119,12 +126,70 @@ public class LauncherController implements Initializable {
 	private boolean imageClicked = false;
 
 	public LauncherController() throws IOException {
+		moverReglas();
+
+		System.setOut(
+				new PrintStream(new FileOutputStream(new File(System.getProperty("user.home") + "\\report.txt"))));
+
 		getJuegos();
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LauncherView.fxml"));
 		loader.setController(this);
 		loader.load();
 
+	}
+
+	private void moverReglas() {
+		File dirReglas = new File(LauncherApp.APP_SCORE_DIR + File.separator + "reglas");
+		if (!dirReglas.exists()) {
+			dirReglas.mkdir();
+//			try {
+//				String string = "/reglas/";
+//				File reglas = new File(
+//						LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator + "AjedrezBeta.txt");
+//
+//				BufferedInputStream in = new BufferedInputStream(getClass().getResourceAsStream(string + "AjedrezBeta.txt"));
+//				
+//				BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(reglas));
+//
+//				int read = in.read();
+//				while (read != -1) {
+//					writer.write(read);
+//					read = in.read();
+//				}
+//
+//				System.out.println(reglas.exists());
+//				Files.copy(reglas.toPath(), new FileOutputStream(new File(
+//						LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator + "AjedrezBeta.txt")));
+//
+//				reglas = new File(getClass().getResource(string + "FuriOut.txt").toExternalForm());
+//				Files.copy(reglas.toPath(), new FileOutputStream(new File(
+//						LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator + "FuriOut.txt")));
+//
+//				System.out.println(reglas.exists());
+//				reglas = new File(getClass().getResource(string + "PongGame.txt").toExternalForm());
+//				Files.copy(reglas.toPath(), new FileOutputStream(new File(
+//						LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator + "PongGame.txt")));
+//
+//				System.out.println(reglas.exists());
+//				reglas = new File(getClass().getResource(string + "SnakeClassic.txt").toExternalForm());
+//				Files.copy(reglas.toPath(), new FileOutputStream(new File(
+//						LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator + "SnakeClassic.txt")));
+//
+//				System.out.println(reglas.exists());
+//				reglas = new File(getClass().getResource(string + "SnakeEvolution.txt").toExternalForm());
+//				Files.copy(reglas.toPath(), new FileOutputStream(new File(LauncherApp.APP_SCORE_DIR + File.separator
+//						+ "reglas" + File.separator + "SnakeEvolution.txt")));
+//
+//				System.out.println(reglas.exists());
+//				reglas = new File(getClass().getResource(string + "SpaceInvaders.txt").toExternalForm());
+//				Files.copy(reglas.toPath(), new FileOutputStream(new File(
+//						LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator + "SpaceInvaders.txt")));
+//
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -321,16 +386,10 @@ public class LauncherController implements Initializable {
 
 		String className = game.getCanonicalName();
 
-		Alert cargando = new Alert(AlertType.INFORMATION, "El juego se está cargando...");
-		cargando.setHeaderText("");
-		cargando.initOwner(LauncherApp.getPrimaryStage());
-		cargando.setGraphic(new ImageView(new Image("assets/textures/lancherLoading.gif")));
-
 		Task<Void> abrirApp = new Task<Void>() {
 
 			@Override
 			protected Void call() throws Exception {
-				cargando.show();
 				ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classPath, className);
 
 				try {
@@ -344,13 +403,9 @@ public class LauncherController implements Initializable {
 		};
 
 		abrirApp.setOnFailed(e1 -> {
-			cargando.close();
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Fallo");
-		});
-
-		abrirApp.setOnSucceeded(e -> {
-			cargando.close();
+			alert.setContentText(e1.getSource().getException().getMessage());
+			alert.show();
 		});
 
 		abrirApp.run();
@@ -408,25 +463,26 @@ public class LauncherController implements Initializable {
 
 	@FXML
 	void onReglasAction(ActionEvent event) throws IOException {
-		
+
 		TextArea reglas = new TextArea();
 		reglas.setEditable(false);
 		reglas.setMinSize(CENTER_WIDTH, CENTER_HEIGHT);
 		reglas.setWrapText(true);
-		
-		String pathname = "src/main/resources/reglas/" + model.getJuegos().get(model.getJuegoSeleccionado()).getSimpleName() + ".txt";
+
+		String pathname = LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator
+				+ model.getJuegos().get(model.getJuegoSeleccionado()).getSimpleName() + ".txt";
 		File file = new File(pathname);
-		
+
 		if (file.exists()) {
 			List<String> reglasList = Files.readAllLines(file.toPath());
-			for(int i = 0; i < reglasList.size(); i++) {
+			for (int i = 0; i < reglasList.size(); i++) {
 				reglas.setText(reglas.getText() + reglasList.get(i) + "\n");
 			}
 		}
-		
+
 		Pane root = new Pane();
 		root.getChildren().add(reglas);
-		
+
 		Stage stage = new Stage();
 		stage.getIcons().addAll(LauncherApp.getPrimaryStage().getIcons());
 		stage.setScene(new Scene(root, CENTER_WIDTH, CENTER_HEIGHT));
