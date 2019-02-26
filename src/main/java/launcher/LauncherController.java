@@ -321,7 +321,7 @@ public class LauncherController implements Initializable {
 
 		String className = game.getCanonicalName();
 
-		Alert cargando = new Alert(AlertType.INFORMATION, "El juego se est� cargando...");
+		Alert cargando = new Alert(AlertType.INFORMATION, "El juego se está cargando...");
 		cargando.setHeaderText("");
 		cargando.initOwner(LauncherApp.getPrimaryStage());
 		cargando.setGraphic(new ImageView(new Image("assets/textures/lancherLoading.gif")));
@@ -349,15 +349,9 @@ public class LauncherController implements Initializable {
 			alert.setContentText("Fallo");
 		});
 
-//		abrirApp.setOnSucceeded(e -> {
-//			HashMap<String, Integer> usoApps = LauncherApp.getUsoControl().getUsoApps();
-//			try {
-//				usoApps.replace(game.getSimpleName(), usoApps.get(game.getSimpleName()) + 1);
-//			} catch (NullPointerException e2) {
-//				usoApps.put(game.getSimpleName(), 1);
-//			}
-//			cargando.close();
-//		});
+		abrirApp.setOnSucceeded(e -> {
+			cargando.close();
+		});
 
 		abrirApp.run();
 	}
