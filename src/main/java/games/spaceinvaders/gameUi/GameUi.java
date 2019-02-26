@@ -45,7 +45,7 @@ public class GameUi implements UIController {
 
 	public void addLife() {
 		int numLives = lives.size();
-		Image image = new Image("/games/spaceinvaders/main/resources/like.png");
+		Image image = new Image("/assets/textures/main/resources/like.png");
 		Texture texture = new Texture(image);
 
 		texture.setTranslateX(20 * numLives + 540);
