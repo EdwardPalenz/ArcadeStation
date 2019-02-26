@@ -71,7 +71,7 @@ public class LauncherApp extends Application {
 		JasperReport reporte = JasperCompileManager.compileReport(is);
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, informe);
-		JasperViewer.viewReport(jasperPrint, false);
+//		JasperViewer.viewReport(jasperPrint, false);
 
 		JRExporter exporter = new JRPdfExporter();
 		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
