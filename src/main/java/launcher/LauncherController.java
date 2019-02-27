@@ -1,5 +1,6 @@
 package launcher;
 
+import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -8,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -37,6 +39,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -50,6 +53,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import launcher.puntuaciones.Puntuaciones;
@@ -248,6 +253,8 @@ public class LauncherController implements Initializable {
 				LauncherApp.getPrimaryStage().setY(event.getScreenY() + y);
 			}
 		});
+		
+		acercaDeMenuItem.setOnAction(e -> onAcercaDeAction(e));
 
 		/*
 		 * Temas
@@ -413,7 +420,13 @@ public class LauncherController implements Initializable {
 
 	@FXML
 	void onAcercaDeAction(ActionEvent event) {
-
+		String url = "https://github.com/EdwardPalenz/ArcadeStation";
+		try {
+			Desktop.getDesktop().browse(new URI(url));
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -469,8 +482,12 @@ public class LauncherController implements Initializable {
 		reglas.setMinSize(CENTER_WIDTH, CENTER_HEIGHT);
 		reglas.setWrapText(true);
 
-		String pathname = LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator
+//		String pathname = LauncherApp.APP_SCORE_DIR + File.separator + "reglas" + File.separator
+//				+ model.getJuegos().get(model.getJuegoSeleccionado()).getSimpleName() + ".txt";
+		
+		String pathname = System.getProperty("user.dir") + File.separator + "reglas" + File.separator
 				+ model.getJuegos().get(model.getJuegoSeleccionado()).getSimpleName() + ".txt";
+		
 		File file = new File(pathname);
 
 		if (file.exists()) {
