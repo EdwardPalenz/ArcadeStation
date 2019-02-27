@@ -16,6 +16,15 @@ Es recomendable tener instalado [Java Runtime Enviroment](https://www.java.com/e
 
 
 
+### Instalación/Ejecución
+
+1. En la pestaña [Releases](https://github.com/EdwardPalenz/ArcadeStation/releases), descargue el ZIP con el ejecutable
+2. Descomprima la carpeta descargada
+3. Ejecute el .exe
+4. ¡Disfrute!
+
+
+
 ### Hecho con
 
 [Java Developer Kit](https://www.oracle.com/technetwork/javaj/javase/downloads/index.html)
